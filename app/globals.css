@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .navLink-active {
+    position: relative;
+  }
+  .navLink-active::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -15px;
+    @apply bg-primary;
+  }
+
+  .app-wrapper {
+    @apply 2xl:w-[1440px] 2xl:m-auto mx-1;
+  }
+
+  .btn {
+    @apply transition-all duration-300 rounded-md py-[.6em] px-[1.2em];
+  }
+
+  .btn-accent {
+    @apply text-white bg-accent hover:bg-accent-dark;
+  }
+
+  .btn-accent-trans {
+    @apply text-accent border border-accent hover:bg-accent hover:text-white;
+  }
+
+  .btn-white-trans {
+    @apply text-white border border-white hover:bg-white hover:text-accent;
+  }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #666666;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #666666;
+}
