@@ -6,40 +6,42 @@ import { ReactNode } from "react";
 import { GrPowerShutdown } from "react-icons/gr";
 import { HiOutlineUsers } from "react-icons/hi";
 import { MdOutlineAccessTime } from "react-icons/md";
-import { RxDashboard } from "react-icons/rx";
+import { IoMdHome } from "react-icons/io";
 
 export default function WithLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <main className="h-screen overflow-hidden bg-gray-200 p-5">
-      <div className="flex gap-5 h-full">
-        <section className="bg-white p-5 rounded-lg w-[20rem] shrink-0 h-full flex flex-col">
-          <div className="mb-3">
+    <main className="h-screen overflow-hidden bg-gray-50">
+      <div className="flex h-full">
+        <section className="bg-accent-dark p-5 w-[20rem] shrink-0 h-full flex flex-col">
+          <div className="mb-10">
             <Image
-              src="/images/logo.png"
-              className="h-32 w-max m-auto"
+              src="/images/logo-white.png"
+              className="h-14 w-max"
               width={500}
               height={306}
               alt="logo"
             />
           </div>
-          <nav>
+          <nav className="space-y-2">
             <Link
               href="/"
               className={`${
-                pathname == "/" ? "font-bold" : ""
-              } flex items-center gap-2 p-3`}
+                pathname == "/" ? "bg-white" : ""
+              } flex items-center gap-2 p-3 rounded-lg font-semibold hover:bg-accent-light hover:text-white duration-300 transition`}
             >
-              <RxDashboard />
+              <IoMdHome />
               Dashboard
             </Link>
 
             <Link
               href="/users"
               className={`${
-                pathname == "/users" ? "font-bold" : ""
-              } flex items-center gap-2 p-3`}
+                pathname == "/users"
+                  ? "bg-accent-lighter text-white rounded-lg"
+                  : ""
+              } flex items-center gap-2 p-3 text-white rounded-lg font-semibold hover:bg-accent-light hover:text-white duration-300 transition`}
             >
               <HiOutlineUsers />
               Users
