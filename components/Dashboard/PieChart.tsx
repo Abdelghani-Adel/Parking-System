@@ -1,39 +1,47 @@
-import { Pie } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip, Legend, ChartOptions } from "chart.js";
+"use client";
+
+import dynamic from "next/dynamic";
+import { ApexOptions } from "apexcharts";
 import { BsFillPieChartFill } from "react-icons/bs";
-Chart.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
-  const data = {
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+const RevenuePieChart = () => {
+  const options: ApexOptions = {
+    chart: {
+      type: "donut",
+    },
     labels: ["Cash", "Card"],
-    datasets: [
-      {
-        label: "Revenue",
-        data: [3000, 5000],
-        backgroundColor: ["#82c9e5", "#36527a"],
-        hoverOffset: 4,
-      },
-    ],
-  };
-
-  const options: ChartOptions<"pie"> = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "bottom",
-      },
+    legend: {
+      position: "bottom",
+      show: false,
+    },
+    colors: ["#22c55e", "#36527a"],
+    dataLabels: {
+      enabled: true,
+    },
+    tooltip: {
+      enabled: true,
     },
   };
 
+  const series = [2800, 900];
+
   return (
     <>
-      <h2 className="text-lg font-bold mb-3 text-accent flex items-center gap-2">
+      {/* <h2 className="text-lg font-bold mb-3 text-accent flex items-center gap-2">
         <BsFillPieChartFill />
         Revenue Type
-      </h2>
-      <Pie data={data} options={options} />
+      </h2> */}
+      <Chart
+        options={options}
+        series={series}
+        type="donut"
+        height="100%"
+        width="100%"
+      />
     </>
   );
 };
 
-export default PieChart;
+export default RevenuePieChart;

@@ -12,7 +12,7 @@ export default function WithLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <main className="h-screen overflow-hidden bg-gray-50">
+    <main className="h-screen overflow-hidden bg-gray-200">
       <div className="flex h-full">
         <section className="bg-accent-dark p-5 w-[20rem] shrink-0 h-full flex flex-col">
           <div className="mb-10">

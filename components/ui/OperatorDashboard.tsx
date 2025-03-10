@@ -2,7 +2,7 @@
 
 import BarChart from "../Dashboard/BarChart";
 import PeakHoursTraffic from "../Dashboard/PeakHours";
-import PieChart from "../Dashboard/PieChart";
+import RevenuePieChart from "../Dashboard/PieChart";
 import { MdAttachMoney, MdOutlineAttachMoney } from "react-icons/md";
 import { FaCar } from "react-icons/fa";
 import { TbParkingCircleFilled } from "react-icons/tb";
@@ -15,46 +15,70 @@ import PendingTickets from "../Dashboard/PendingTickets";
 import { GiMoneyStack } from "react-icons/gi";
 import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { LuTicketCheck } from "react-icons/lu";
+import PaymentsOverview from "../Dashboard/Test";
 
 const OperatorDashboard = () => {
   return (
     <div className="p-4 w-full">
-      <div className="grid grid-cols-4 gap-2">
-        <div className="bg-green-400 text-white p-2 rounded-lg">
-          <h2 className="flex items-center text-xl">
-            <MdAttachMoney className="text-2xl" />
-            Total Revenue
-          </h2>
-          <p className="text-center py-3 text-2xl font-semibold">470 EGP</p>
+      <div className="grid grid-cols-3 gap-6">
+        <div className="bg-white rounded-lg p-4">
+          <div className="flex justify-between items-end">
+            <div className="shrink-0">
+              <div className="rounded-full bg-green-500 h-16 w-16 flex items-center justify-center">
+                <MdAttachMoney className="text-5xl text-white" />
+              </div>
+
+              <p className="text-2xl font-bold mt-5">470 EGP</p>
+              <h6>Total Revenue</h6>
+            </div>
+
+            <div className="h-28 w-28">
+              <RevenuePieChart />
+            </div>
+          </div>
         </div>
 
-        <div className="bg-sky-400 text-white p-2 rounded-lg">
-          <h2 className="flex gap-2 items-center text-xl">
-            <FaCar className="text-2xl" />
-            Total Vehicles
-          </h2>
-          <p className="text-center py-3 text-2xl font-semibold">16</p>
+        <div className="bg-white rounded-lg p-4">
+          <div className="flex justify-between items-end">
+            <div className="shrink-0">
+              <div className="rounded-full bg-accent h-16 w-16 flex items-center justify-center">
+                <FaCar className="text-4xl text-white" />
+              </div>
+
+              <p className="text-2xl font-bold mt-5">65</p>
+              <h6>Total Vehicles</h6>
+            </div>
+
+            <div className="h-28 w-28">
+              <VehicleTypePieChart />
+            </div>
+          </div>
         </div>
 
-        <div className="bg-amber-400 text-white p-2 rounded-lg">
-          <h2 className="flex gap-2 items-center text-xl">
-            <TbParkingCircleFilled className="text-2xl" />
-            Vehicles Inside
-          </h2>
-          <p className="text-center py-3 text-2xl font-semibold">11</p>
-        </div>
+        <div className="bg-white rounded-lg p-4">
+          <div className="flex justify-between items-end">
+            <div className="shrink-0">
+              <div className="rounded-full bg-amber-400 h-16 w-16 flex items-center justify-center">
+                <TbParkingCircleFilled className="text-4xl text-white" />
+              </div>
 
-        <div className="bg-orange-400 text-white p-2 rounded-lg">
-          <h2 className="flex gap-2 items-center text-xl">
-            <IoTimer className="text-2xl" />
-            Shift Timer
-          </h2>
-          <p className="text-center py-3 text-2xl font-semibold">04:16:13</p>
+              <p className="text-2xl font-bold mt-5">65</p>
+              <h6>Vehicles Inside</h6>
+            </div>
+
+            <div className="h-28 w-28">
+              <VehicleTypePieChart />
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="w-full grid grid-cols-12 gap-3 mt-5 items-stretch">
-        <div className="col-span-4 bg-white p-5 rounded-lg border">
+      <div className="w-full grid grid-cols-12 gap-6 mt-6 items-stretch">
+        <div className="col-span-7 bg-white p-5 rounded-lg border">
+          <PeakHoursLine />
+        </div>
+
+        <div className="col-span-5 bg-white p-5 rounded-lg border">
           <h2 className="text-lg font-bold mb-3 text-accent flex items-center gap-2">
             <LuTicketCheck />
             Ticket Payment
@@ -100,24 +124,24 @@ const OperatorDashboard = () => {
           </div>
         </div>
 
-        <div className="col-span-5 bg-white p-5 rounded-lg border">
+        {/* <div className="col-span-7 bg-white p-5 rounded-lg border">
           <PeakHoursLine />
-        </div>
+        </div> */}
 
-        <div className="col-span-3 bg-white p-5 rounded-lg border">
+        {/* <div className="col-span-3 bg-white p-5 rounded-lg border">
           <VehicleTypePieChart />
-        </div>
+        </div> */}
 
-        <div className="col-span-3 bg-white p-5 rounded-lg border">
-          <PieChart />
-        </div>
-
-        <div className="col-span-5 flex flex-col justify-between bg-white p-5 rounded-lg border">
-          <BarChart />
-        </div>
+        {/* <div className="col-span-3 bg-white p-5 rounded-lg border">
+          <RevenuePieChart />
+        </div> */}
 
         <div className="col-span-4 bg-white p-5 rounded-lg border">
           <PendingTickets />
+        </div>
+
+        <div className="col-span-8 flex flex-col justify-between bg-white p-5 rounded-lg border">
+          <BarChart />
         </div>
 
         <div className="col-span-12 bg-white p-5 rounded-lg border">
