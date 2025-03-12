@@ -1,27 +1,21 @@
+import { ReactNode } from "react";
 import type { Metadata } from "next";
-import { Bai_Jamjuree } from "next/font/google";
 import "./globals.css";
-
-const baiJamjuree = Bai_Jamjuree({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "Quantum Parking",
   description: "Parking System",
 };
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-export default function RootLayout({ children }: Readonly<LayoutProps>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${baiJamjuree.className}`}>
-        {children}
-        <div id="modalContainer"></div>
+    <html>
+      <body className={`font-english rtl:font-arabic`}>
+        <LanguageProvider>
+          {children}
+          <div id="modalContainer" />
+        </LanguageProvider>
       </body>
     </html>
   );

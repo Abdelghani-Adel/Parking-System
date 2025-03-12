@@ -1,0 +1,18 @@
+{
+  "dashboard": "الرئيسية",
+  "cards": "إدارة البطاقات",
+  "shiftActions": "بدء / إنهاء الشيفت",
+  "startShift": "بدء الشيفت",
+  "endShift": "إيقاف الشيفت",
+  "shiftRevenue": "إيرادات خلال الشيفت",
+  "shiftVehicles": "السيارات خلال الشيفت",
+  "vehiclesParking": "مركبات داخل الجراج",
+  "ticketPayment": "حساب المركبة",
+  "calculate": "إحسب",
+  "payVisa": "دفع عن طريق الفيزا",
+  "payCash": "دفع كاش",
+  "totalAmount": "الإجمالي",
+  "change": "الباقي",
+  "egp": "جنيه",
+  "save": "حفظ"
+}

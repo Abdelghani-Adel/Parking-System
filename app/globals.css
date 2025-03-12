@@ -28,16 +28,28 @@
   }
 
   .btn-accent {
-    @apply text-white bg-accent hover:bg-accent-dark;
+    @apply text-white bg-primary hover:bg-primary-dark;
   }
 
   .btn-accent-trans {
-    @apply text-accent border border-accent hover:bg-accent hover:text-white;
+    @apply text-primary border border-primary hover:bg-primary hover:text-white;
   }
 
   .btn-white-trans {
-    @apply text-white border border-white hover:bg-white hover:text-accent;
+    @apply text-white border border-white hover:bg-white hover:text-primary;
   }
+}
+
+.apexcharts-xaxis-label,
+.apexcharts-yaxis-label,
+.apexcharts-legend-text {
+  color: unset !important;
+  @apply fill-grey  dark:fill-white text-grey dark:text-white;
+}
+
+/* globals.css */
+* {
+  @apply transition duration-100 ease-linear;
 }
 
 /* Scrollbar Styles */

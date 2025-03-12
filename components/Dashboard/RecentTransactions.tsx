@@ -82,24 +82,18 @@ const RecentTransactions = () => {
   return (
     <>
       <>
-        <h2 className="text-lg font-bold mb-3 text-accent flex items-center gap-2">
+        <h2 className="text-lg font-bold mb-3 text-primary dark:text-grey-light flex items-center gap-2">
           <MdPendingActions />
           Recent Transactions
         </h2>
 
-        <div className="h-60 overflow-y-auto border border-gray-200 rounded-lg w-full">
-          <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-            <thead className="bg-gray-100">
+        <div className="h-72 overflow-y-auto border border-grey-light rounded-lg w-full">
+          <table className="min-w-full border border-grey-light rounded-lg">
+            <thead className="bg-grey-light">
               <tr>
-                <th className="px-6 py-2 text-left text-gray-600 text-sm">
-                  ID
-                </th>
-                <th className="px-6 py-2 text-left text-gray-600 text-sm">
-                  Check-In
-                </th>
-                <th className="px-6 py-2 text-left text-gray-600 text-sm">
-                  Payment
-                </th>
+                <th className="px-6 py-2 text-start text-gray-600 text-sm">ID</th>
+                <th className="px-6 py-2 text-start text-gray-600 text-sm">Check-In</th>
+                <th className="px-6 py-2 text-start text-gray-600 text-sm">Payment</th>
               </tr>
             </thead>
             <tbody className="text-sm">

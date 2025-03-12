@@ -9,33 +9,24 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        english: ["Inter", "sans-serif"],
+        arabic: ["Cairo", "Noto Kufi Arabic", "ui-sans-serif", "system-ui"],
       },
       colors: {
         primary: {
-          DEFAULT: "#00222C",
-        },
-        accent: {
-          lighter: "#62a2d2",
-          light: "#82c9e5",
+          lighter: "#82c9e5",
+          light: "#62a2d2",
           DEFAULT: "#4c77b7",
           dark: "#36527a",
+          darker: "#22354f",
         },
-        warning: {
-          DEFAULT: "#ECF494",
-        },
-        error: {
-          DEFAULT: "#D00000",
-        },
-        success: {
-          DEFAULT: "#38B000",
-        },
-        customGray: {
-          light: "#e5e7eb",
-          DEFAULT: "#808080",
+        grey: {
+          lighter: "#f6f3f4",
+          light: "#ebe6e7",
+          DEFAULT: "#6a7282",
+          dark: "#364153",
+          darker: "#1e2939",
         },
       },
     },

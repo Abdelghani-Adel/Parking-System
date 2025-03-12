@@ -1,0 +1,18 @@
+{
+  "dashboard": "Dashboard",
+  "cards": "Cards",
+  "shiftActions": "Shift Actions",
+  "startShift": "Start Shift",
+  "endShift": "Stop Shift",
+  "shiftRevenue": "Shift Revenue",
+  "shiftVehicles": "Shift Total Vehicles",
+  "vehiclesParking": "Vehicles Parking Inside",
+  "ticketPayment": "Ticket Payment",
+  "calculate": "Caclulate",
+  "payVisa": "Pay With Visa",
+  "payCash": "Pay Cash",
+  "totalAmount": "Total Amount",
+  "change": "change",
+  "egp": "EGP",
+  "save": "Save"
+}

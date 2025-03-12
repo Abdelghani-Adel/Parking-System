@@ -1,4 +1,4 @@
-import OperatorDashboard from "@/components/ui/OperatorDashboard";
+import OperatorDashboard from "@/components/Dashboard/OperatorDashboard";
 import { Metadata } from "next";
 import { FaCalculator, FaCar } from "react-icons/fa6";
 import { GiExitDoor } from "react-icons/gi";
@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="w-full h-full overflow-auto">
+    <section className="w-full h-full overflow-auto">
       <OperatorDashboard />
-    </div>
+    </section>
   );
 }
