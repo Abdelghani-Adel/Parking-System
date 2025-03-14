@@ -20,10 +20,7 @@ const LanguageToggle = () => {
 
   return (
     <div>
-      <button
-        onClick={handleClick}
-        className="flex items-center gap-2 bg-mode dark:text-white hover-mode px-2 py-2 rounded-lg "
-      >
+      <button onClick={handleClick} className="flex items-center gap-2 px-2 py-2 rounded-lg ">
         {currentLang === "en" ? <English /> : <Arabic />}
         <FaChevronDown className="text-xs" />
       </button>

@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const metadata: Metadata = {
   title: "Quantum Parking",

@@ -10,12 +10,23 @@ import { FaHourglassStart } from "react-icons/fa6";
 import { VscDebugStart } from "react-icons/vsc";
 import { BsFillStopFill } from "react-icons/bs";
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image";
 
 const Sidebar = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="w-64 p-2 space-y-3">
+    <div className="space-y-3">
+      <Image src="/images/logo2.png" className="h-14 w-max dark:hidden" width={500} height={306} alt="logo" />
+
+      <Image
+        src="/images/logo-white.png"
+        className="h-14 w-max hidden dark:block"
+        width={500}
+        height={306}
+        alt="logo"
+      />
+
       <NavItem title={t("dashboard")} icon={<FaHome />} path="/" />
 
       <NavItem title={t("cards")} icon={<FaRegAddressCard />} path="/cards" />
@@ -38,7 +49,7 @@ const NavItem: FC<INavItemProps> = ({ title, icon, path }) => {
     <Link
       href={path}
       className={clsx("flex items-center gap-2 w-full p-3 rounded-lg hover:bg-grey-lighter dark:hover:bg-grey", {
-        "bg-grey-lighter text-primary dark:bg-grey dark:text-white": isActive,
+        "bg-grey-lighter text-primary dark:bg-grey": isActive,
         "text-grey dark:text-grey-light ": !isActive,
       })}
     >

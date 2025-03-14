@@ -40,6 +40,18 @@
   }
 }
 
+.input-field {
+  @apply dark:bg-grey dark:placeholder:text-grey-light rounded-lg focus:outline-none font-normal border-2;
+}
+
+.MuiPaper-root {
+  @apply dark:bg-grey dark:text-white !important;
+}
+
+.MuiList-root {
+  @apply p-2 !important;
+}
+
 .apexcharts-xaxis-label,
 .apexcharts-yaxis-label,
 .apexcharts-legend-text {
@@ -47,9 +59,22 @@
   @apply fill-grey  dark:fill-white text-grey dark:text-white;
 }
 
+.MuiFormControl-root,
+.MuiToggleButtonGroup-root {
+  @apply bg-white dark:bg-grey rounded-lg outline-none active:outline-none focus:outline-none !important;
+}
+
+.MuiToggleButton-root {
+  @apply dark:text-grey-light;
+}
+.MuiToggleButton-root.Mui-selected {
+  @apply dark:bg-grey-darker dark:text-white;
+}
+
 /* globals.css */
 * {
   @apply transition duration-100 ease-linear;
+  @apply dark:text-white;
 }
 
 /* Scrollbar Styles */

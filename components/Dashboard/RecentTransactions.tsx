@@ -89,7 +89,7 @@ const RecentTransactions = () => {
 
         <div className="h-72 overflow-y-auto border border-grey-light rounded-lg w-full">
           <table className="min-w-full border border-grey-light rounded-lg">
-            <thead className="bg-grey-light">
+            <thead className="bg-grey-light dark:bg-grey">
               <tr>
                 <th className="px-6 py-2 text-start text-gray-600 text-sm">ID</th>
                 <th className="px-6 py-2 text-start text-gray-600 text-sm">Check-In</th>

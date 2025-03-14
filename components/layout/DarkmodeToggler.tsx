@@ -22,14 +22,11 @@ const DarkmodeToggler = () => {
 
   return (
     <div className="bg-grey-light dark:bg-black w-max flex gap-3 rounded-full text-2xl p-2">
-      <button
-        onClick={toggleDarkMode}
-        className="bg-white dark:bg-transparent dark:text-grey-light rounded-full p-1 cursor-pointer"
-      >
+      <button onClick={toggleDarkMode} className="bg-white dark:bg-transparent  rounded-full p-1 cursor-pointer">
         <PiSunDim />
       </button>
 
-      <button onClick={toggleDarkMode} className="dark:bg-grey dark:text-white rounded-full p-1 cursor-pointer">
+      <button onClick={toggleDarkMode} className="dark:bg-grey rounded-full p-1 cursor-pointer">
         <LuMoon />
       </button>
     </div>

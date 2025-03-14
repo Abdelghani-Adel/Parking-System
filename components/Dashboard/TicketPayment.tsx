@@ -41,7 +41,7 @@ const TicketPayment = () => {
         <button
           disabled={ticketNumber.length > 4 ? false : true}
           onClick={() => setTotalAmount(35)}
-          className="disabled:bg-grey-light disabled:text-grey-dark disabled:cursor-not-allowed flex items-center gap-2 bg-primary hover:bg-primary-dark transition duration-300 px-5 rounded-lg text-white text-sm"
+          className="disabled:bg-grey-light disabled:text-grey-dark disabled:cursor-not-allowed flex items-center gap-2 bg-primary hover:bg-primary-dark transition duration-300 px-5 rounded-lg text-white dark:text-black text-sm"
         >
           <FaCalculator className="text-lg" />
           <span>{t("calculate")}</span>
