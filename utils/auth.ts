@@ -28,9 +28,9 @@ export function getCookie(name: string): string | undefined | null {
 }
 
 // ✅ Delete Cookie
-export function deleteCookie() {
+export function deleteCookie(name: string) {
   if (typeof window !== "undefined") {
-    document.cookie = `${TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
   }
 }
 

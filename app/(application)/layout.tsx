@@ -1,9 +1,11 @@
 "use client";
 
+import { LogoutButton } from "@/components/layout/LogoutButton";
 import Sidebar from "@/components/layout/Sidebar";
 import TopBar from "@/components/layout/TopBar";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
+import { LuLogOut } from "react-icons/lu";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -17,9 +19,14 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           <Image src="/images/logo-white.png" className="h-14 w-max" width={500} height={306} alt="logo" />
         </div>
 
-        <nav className="flex-grow overflow-y-auto overflow-overlay mt-4">
+        <nav className="flex-grow overflow-y-auto overflow-x-hiddn overflow-overlay my-4">
           <Sidebar />
         </nav>
+
+        <LogoutButton className="mt-auto flex items-center gap-2 h-10 rounded-lg  p-2 text-white justify-center bg-red-500 relative">
+          <LuLogOut className="size-5" />
+          <span className="hidden group-[.open]:block">Logout</span>
+        </LogoutButton>
       </section>
 
       <section className="flex-grow flex flex-col">

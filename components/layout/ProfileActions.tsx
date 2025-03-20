@@ -9,6 +9,8 @@ import { FaChevronDown } from "react-icons/fa";
 import { VscDebugStart } from "react-icons/vsc";
 import { useLanguage } from "@/context/LanguageContext";
 import { BsFillStopFill } from "react-icons/bs";
+import { LogoutButton } from "./LogoutButton";
+import { LuLogOut } from "react-icons/lu";
 
 const ProfileActions = () => {
   const { t } = useLanguage();
@@ -54,6 +56,11 @@ const ProfileActions = () => {
             {t("endShift")}
           </button>
         </MenuItem>
+
+        <LogoutButton className="flex items-center gap-2 h-10 w-full rounded-lg  p-2 text-white justify-center bg-red-500 relative">
+          <LuLogOut className="size-5" />
+          <span>Logout</span>
+        </LogoutButton>
       </Menu>
     </div>
   );
