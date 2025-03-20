@@ -1,0 +1,46 @@
+{
+  "records": [
+    {
+      "id": "1",
+      "name": "Ahmed Abdelnaby",
+      "role": "super admin",
+      "email": "ahmed@royaldefense.com",
+      "phone": "01000000000"
+    },
+    {
+      "id": "1",
+      "name": "Baher Elnaggar",
+      "role": "super admin",
+      "email": "baher@royaldefense.com",
+      "phone": "01000000000"
+    },
+    {
+      "id": "1",
+      "name": "Abdelghani Adel",
+      "role": "super admin",
+      "email": "abdelghani@royaldefense.com",
+      "phone": "01000000000"
+    },
+    {
+      "id": "1",
+      "name": "ali",
+      "role": "admin",
+      "email": "ali@test.com",
+      "phone": "01000000000"
+    },
+    {
+      "id": "1",
+      "name": "mohamed",
+      "role": "operator",
+      "email": "mohamed@test.com",
+      "phone": "01000000000"
+    },
+    {
+      "id": "1",
+      "name": "mohamed",
+      "role": "supervisor",
+      "email": "mohamed@test.com",
+      "phone": "01000000000"
+    }
+  ]
+}

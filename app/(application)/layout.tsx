@@ -1,28 +1,34 @@
 "use client";
 
-import DarkmodeToggler from "@/components/layout/DarkmodeToggler";
-import LanguageToggle from "@/components/layout/LanguageToggle";
-import Notifications from "@/components/layout/Notifications";
-import ProfileActions from "@/components/layout/ProfileActions";
 import Sidebar from "@/components/layout/Sidebar";
 import TopBar from "@/components/layout/TopBar";
 import Image from "next/image";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
-  return (
-    <main className="h-screen overflow-hidden bg-gray-200 dark:bg-black flex">
-      <div className="w-72 shrink-0 bg-white dark:bg-grey-darker h-full p-4 z-10">
-        <Sidebar />
-      </div>
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
 
-      <div className="w-full">
-        <div className="bg-white dark:bg-grey-darker drop-shadow-lg p-4">
-          <TopBar />
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+
+  return (
+    <main className={`h-screen w-screen overflow-hidden flex group ${isSidebarOpen ? "open" : ""}`}>
+      <section className="p-2 pb-8 flex flex-col bg-primary-dark dark:bg-grey-darker overflow-hidden transition-all duration-500 ease-in-out w-16 min-w-16 group-[.open]:w-72 group-[.open]:min-w-72">
+        <div className="h-16 transition-all duration-500 ease-in-out origin-left scale-x-0 group-[.open]:scale-x-100">
+          <Image src="/images/logo-white.png" className="h-14 w-max" width={500} height={306} alt="logo" />
         </div>
 
-        {children}
-      </div>
+        <nav className="flex-grow overflow-y-auto overflow-overlay mt-4">
+          <Sidebar />
+        </nav>
+      </section>
+
+      <section className="flex-grow flex flex-col">
+        <header className="h-16 px-4 shrink-0 drop-shadow-lg bg-white dark:bg-grey-darker">
+          <TopBar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+        </header>
+
+        <div className="overflow-auto">{children}</div>
+      </section>
     </main>
   );
 }

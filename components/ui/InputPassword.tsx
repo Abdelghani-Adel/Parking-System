@@ -28,18 +28,13 @@ const InputPassword: React.FC<InputProps> = (props) => {
           className="w-full py-2 px-2 text-sm font-normal pr-8 border rounded-md focus:outline-none border-accent-light focus:ring-blue-500"
         />
 
-        <TogglePass
-          isPlainText={isPlainText}
-          onClick={() => setIsPlainText((prev) => !prev)}
-        />
+        <TogglePass isPlainText={isPlainText} onClick={() => setIsPlainText((prev) => !prev)} />
       </div>
     </div>
   );
 };
 
-const TogglePass: FC<{ onClick: () => void; isPlainText: boolean }> = (
-  props
-) => {
+const TogglePass: FC<{ onClick: () => void; isPlainText: boolean }> = (props) => {
   return (
     <button
       type="button"
@@ -64,10 +59,7 @@ const PasswordRules: React.FC<{ password: string }> = ({ password }) => {
   return (
     <ul className="text-customGray text-sm mt-1 space-y-1">
       {rules.map((rule, index) => (
-        <li
-          key={index}
-          className={`font-normal ${rule.isValid ? "text-success" : ""}`}
-        >
+        <li key={index} className={`font-normal ${rule.isValid ? "text-success" : ""}`}>
           ✓ {rule.text}
         </li>
       ))}
@@ -77,11 +69,7 @@ const PasswordRules: React.FC<{ password: string }> = ({ password }) => {
 
 const ConfirmRules: FC<{ isConfirmed: boolean }> = (props) => {
   return (
-    <p
-      className={`font-normal text-sm mt-1 text-customGray ${
-        props.isConfirmed ? "text-success" : ""
-      }`}
-    >
+    <p className={`font-normal text-sm mt-1 text-customGray ${props.isConfirmed ? "text-success" : ""}`}>
       ✓ Passwords match
     </p>
   );

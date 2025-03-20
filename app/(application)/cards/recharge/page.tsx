@@ -1,10 +1,10 @@
-import TableParkingCards from "@/components/molecules/TableParkingCards";
+import ChargeParkingCard from "@/components/molecules/ChargeParkingCard";
 import React from "react";
 
 const Page = () => {
   return (
     <div className="p-4">
-      <TableParkingCards />
+      <ChargeParkingCard />
     </div>
   );
 };

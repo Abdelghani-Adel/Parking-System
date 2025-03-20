@@ -1,4 +1,4 @@
-import { getAuthToken } from "@/utils/getAuthToken";
+import { getAuthToken } from "@/utils/auth";
 import axios from "axios";
 
 const axiosInstance = axios.create({

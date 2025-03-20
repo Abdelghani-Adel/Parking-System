@@ -1,81 +1,156 @@
 "use client";
-import { FC, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FaHome, FaCalendarAlt, FaUser, FaTasks, FaFileAlt } from "react-icons/fa";
-import { FiChevronDown } from "react-icons/fi";
-import clsx from "clsx";
-import { FaRegAddressCard } from "react-icons/fa";
-import { FaHourglassStart } from "react-icons/fa6";
-import { VscDebugStart } from "react-icons/vsc";
-import { BsFillStopFill } from "react-icons/bs";
+
 import { useLanguage } from "@/context/LanguageContext";
-import Image from "next/image";
+import { roles } from "@/utils/auth";
+import { FC } from "react";
+import { BsCardChecklist, BsCreditCard2Back, BsFillStopFill } from "react-icons/bs";
+import { FaHome, FaHourglassStart, FaRegAddressCard } from "react-icons/fa";
+import { FaUsersBetweenLines } from "react-icons/fa6";
+import { FiUsers } from "react-icons/fi";
+import { GiCardExchange } from "react-icons/gi";
+import { GoGear } from "react-icons/go";
+import { GrUserManager, GrUserWorker } from "react-icons/gr";
+import { TbHttpPost, TbUsersPlus } from "react-icons/tb";
+import { VscDebugStart } from "react-icons/vsc";
+import Protect from "./Protect";
+import MenuLink from "./MenuLink";
+import SidebarMenu from "./SidebarMenu";
 
-const Sidebar = () => {
+const Sidebar: FC = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="space-y-3">
-      <Image src="/images/logo2.png" className="h-14 w-max dark:hidden" width={500} height={306} alt="logo" />
+    <div className="space-y-2">
+      <MenuLink href="/">
+        <FaHome className="h-5 w-5 shrink-0" />
+        <span className="absolute left-10 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
+          {t("dashboard")}
+        </span>
+      </MenuLink>
 
-      <Image
-        src="/images/logo-white.png"
-        className="h-14 w-max hidden dark:block"
-        width={500}
-        height={306}
-        alt="logo"
-      />
+      <Protect roles={[roles.admin, roles.superAdmin]}>
+        <SidebarMenu
+          title={
+            <div className="flex items-center gap-2">
+              <FiUsers className="h-5 w-5 shrink-0" />
+              <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
+                Users
+              </span>
+            </div>
+          }
+        >
+          <MenuLink href="/users">
+            <FaUsersBetweenLines />
+            Users List
+          </MenuLink>
 
-      <NavItem title={t("dashboard")} icon={<FaHome />} path="/" />
+          <MenuLink href="/users/add">
+            <TbUsersPlus />
+            Add User
+          </MenuLink>
+        </SidebarMenu>
+      </Protect>
 
-      <NavItem title={t("cards")} icon={<FaRegAddressCard />} path="/cards" />
-
-      <ShiftActions />
-    </div>
-  );
-};
-
-interface INavItemProps {
-  title: string;
-  icon: JSX.Element;
-  path: string;
-}
-const NavItem: FC<INavItemProps> = ({ title, icon, path }) => {
-  const pathname = usePathname();
-  const isActive = pathname === path;
-
-  return (
-    <Link
-      href={path}
-      className={clsx("flex items-center gap-2 w-full p-3 rounded-lg hover:bg-grey-lighter dark:hover:bg-grey", {
-        "bg-grey-lighter text-primary dark:bg-grey": isActive,
-        "text-grey dark:text-grey-light ": !isActive,
-      })}
-    >
-      {icon}
-      <span>{title}</span>
-    </Link>
-  );
-};
-
-const ShiftActions = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { t } = useLanguage();
-
-  return (
-    <div className="text-grey dark:text-grey-light">
-      <button
-        className="flex items-center gap-2 w-full p-3 rounded-lg  hover:bg-grey-lighter dark:hover:bg-grey"
-        onClick={() => setIsOpen(!isOpen)}
+      <SidebarMenu
+        title={
+          <div className="flex items-center gap-2">
+            <GrUserWorker className="h-5 w-5 shrink-0" />
+            <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
+              Parking Operations
+            </span>
+          </div>
+        }
       >
-        <FaHourglassStart />
-        <span>{t("shiftActions")}</span>
-        <FiChevronDown className={`ms-auto transition ${isOpen ? "rotate-180" : ""}`} />
-      </button>
+        <MenuLink href="/operations/pos">
+          <TbHttpPost />
+          POS
+        </MenuLink>
 
-      {isOpen && (
-        <div className="ml-8 mt-2 space-y-1 flex flex-col items-start gap-3">
+        <MenuLink href="/cards/recharge">
+          <GiCardExchange />
+          Recharge Cards
+        </MenuLink>
+      </SidebarMenu>
+
+      <SidebarMenu
+        title={
+          <div className="flex items-center gap-2">
+            <FaRegAddressCard className="h-5 w-5 shrink-0" />
+            <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
+              Cards
+            </span>
+          </div>
+        }
+      >
+        <Protect roles={[roles.superAdmin]}>
+          <MenuLink href="/config/cards">
+            <GoGear />
+            Configurations
+          </MenuLink>
+        </Protect>
+
+        <Protect roles={[roles.superAdmin, roles.admin]}>
+          <MenuLink href="/cards/manager">
+            <GrUserManager />
+            Manager Cards
+          </MenuLink>
+
+          <MenuLink href="/cards/subscriber">
+            <BsCardChecklist />
+            Subscriber Cards
+          </MenuLink>
+
+          <MenuLink href="/cards/stored-value">
+            <BsCreditCard2Back />
+            Stored Value Cards
+          </MenuLink>
+        </Protect>
+
+        <MenuLink href="/cards/recharge">
+          <GiCardExchange />
+          Recharge Cards
+        </MenuLink>
+      </SidebarMenu>
+
+      <Protect roles={[roles.superAdmin]}>
+        <SidebarMenu
+          title={
+            <div className="flex items-center gap-2">
+              <FaHourglassStart className="h-5 w-5 shrink-0" />
+              <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
+                Parking Management
+              </span>
+            </div>
+          }
+        >
+          <MenuLink href="#">
+            <GoGear />
+            Configurations
+          </MenuLink>
+
+          <MenuLink href="#">
+            <VscDebugStart />
+            Parking Categories
+          </MenuLink>
+
+          <MenuLink href="#">
+            <VscDebugStart />
+            Parking Dispensers
+          </MenuLink>
+        </SidebarMenu>
+      </Protect>
+
+      <SidebarMenu
+        title={
+          <div className="flex items-center gap-2">
+            <FaHourglassStart className="h-5 w-5 shrink-0" />
+            <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
+              {t("shiftActions")}
+            </span>
+          </div>
+        }
+      >
+        <div className="space-y-3 mt-2">
           <button className="flex items-center gap-2">
             <VscDebugStart />
             {t("startShift")}
@@ -86,7 +161,7 @@ const ShiftActions = () => {
             {t("endShift")}
           </button>
         </div>
-      )}
+      </SidebarMenu>
     </div>
   );
 };
