@@ -34,13 +34,6 @@
       "role": "operator",
       "email": "mohamed@test.com",
       "phone": "01000000000"
-    },
-    {
-      "id": "1",
-      "name": "mohamed",
-      "role": "supervisor",
-      "email": "mohamed@test.com",
-      "phone": "01000000000"
     }
   ]
 }

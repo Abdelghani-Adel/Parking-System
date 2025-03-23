@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #666666;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #666666;
+  }
+}
+
 @layer components {
   .table-default {
     @apply min-w-full border;
@@ -20,7 +42,7 @@
   }
 
   .table-default tbody td {
-    @apply px-6 py-1;
+    @apply px-6 py-3;
   }
 
   .dashboard-card {
@@ -29,50 +51,10 @@
 }
 
 @layer utilities {
-  .navLink-active {
-    position: relative;
-  }
-  .navLink-active::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-    left: -15px;
-    @apply bg-primary;
-  }
-
-  .app-wrapper {
-    @apply 2xl:w-[1440px] 2xl:m-auto mx-1;
-  }
-
-  .btn {
-    @apply transition-all duration-300 rounded-md py-[.6em] px-[1.2em];
-  }
-
-  .btn-accent {
-    @apply text-white bg-primary hover:bg-primary-dark;
-  }
-
-  .btn-accent-trans {
-    @apply text-primary border border-primary hover:bg-primary hover:text-white;
-  }
-
-  .btn-white-trans {
-    @apply text-white border border-white hover:bg-white hover:text-primary;
-  }
-
   .overflow-overlay {
     scrollbar-gutter: stable;
-    overflow: overlay;
+    /* overflow: overlay; */
   }
-}
-
-.input-field {
-  @apply dark:bg-grey dark:placeholder:text-grey-light rounded-lg focus:outline-none font-normal border-2;
 }
 
 .MuiPaper-root {
@@ -102,30 +84,9 @@
   @apply dark:bg-grey-darker dark:text-white;
 }
 
-/* globals.css */
-* {
-  @apply transition duration-100 ease-linear;
-  @apply dark:text-white;
-}
-
-/* Scrollbar Styles */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #666666;
-  border-radius: 4px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #666666;
+.animated-gradient {
+  background-size: 200% 200%;
+  animation: gradient-bg 5s ease infinite;
 }
 
 @keyframes gradient-bg {
@@ -140,7 +101,37 @@
   }
 }
 
-.animated-gradient {
-  background-size: 200% 200%;
-  animation: gradient-bg 5s ease infinite;
+.muidatatable .MuiToolbar-root {
+  @apply bg-primary dark:bg-grey-darker min-h-0 py-2;
+}
+
+.muidatatable table {
+  @apply min-w-full;
+}
+
+.muidatatable th {
+  @apply p-2 text-start dark:text-white text-sm bg-grey-light dark:bg-grey-darker !important;
+}
+
+.muidatatable th * {
+  @apply font-bold !important;
+}
+
+.muidatatable tbody td {
+  @apply px-2 py-3 !important;
+}
+
+.muidatatable .MuiInputBase-input {
+  @apply px-2;
+}
+.muidatatable .MuiInputBase-root::before {
+  border-bottom: none !important;
+}
+
+.muidatatable .MuiInputBase-root::after {
+  border-bottom: none !important;
+}
+
+.muidatatable .MuiToolbar-root .MuiSvgIcon-root {
+  @apply text-white;
 }

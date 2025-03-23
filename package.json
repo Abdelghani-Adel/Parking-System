@@ -23,6 +23,7 @@
     "crypto-js": "^4.2.0",
     "jose": "^6.0.7",
     "jsonwebtoken": "^9.0.2",
+    "mui-datatables": "^4.3.0",
     "next": "14.2.1",
     "react": "^18",
     "react-apexcharts": "^1.7.0",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/mui-datatables": "^4.3.12",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

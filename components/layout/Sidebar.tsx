@@ -15,12 +15,24 @@ import { VscDebugStart } from "react-icons/vsc";
 import Protect from "./Protect";
 import MenuLink from "./MenuLink";
 import SidebarMenu from "./SidebarMenu";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const Sidebar: FC = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 font-bold mt-5">
+      {/* Users */}
+      <Protect roles={[roles.admin, roles.superAdmin]}>
+        <MenuLink href="/users">
+          <FiUsers className="h-5 w-5 shrink-0" />
+          <span className="absolute left-10 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
+            Users
+          </span>
+        </MenuLink>
+      </Protect>
+
+      {/* Dashboard */}
       <MenuLink href="/">
         <FaHome className="h-5 w-5 shrink-0" />
         <span className="absolute left-10 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
@@ -28,50 +40,36 @@ const Sidebar: FC = () => {
         </span>
       </MenuLink>
 
-      <Protect roles={[roles.admin, roles.superAdmin]}>
+      {/* Parking Management */}
+      <Protect roles={[roles.superAdmin]}>
         <SidebarMenu
           title={
             <div className="flex items-center gap-2">
-              <FiUsers className="h-5 w-5 shrink-0" />
+              <GoGear className="h-5 w-5 shrink-0" />
               <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
-                Users
+                Parking Management
               </span>
             </div>
           }
         >
-          <MenuLink href="/users">
-            <FaUsersBetweenLines />
-            Users List
+          <MenuLink href="/config/setup">
+            <GoGear />
+            Setup
           </MenuLink>
 
-          <MenuLink href="/users/add">
-            <TbUsersPlus />
-            Add User
+          <MenuLink href="#">
+            <VscDebugStart />
+            Parking Categories
+          </MenuLink>
+
+          <MenuLink href="#">
+            <VscDebugStart />
+            Parking Dispensers
           </MenuLink>
         </SidebarMenu>
       </Protect>
 
-      <SidebarMenu
-        title={
-          <div className="flex items-center gap-2">
-            <GrUserWorker className="h-5 w-5 shrink-0" />
-            <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
-              Parking Operations
-            </span>
-          </div>
-        }
-      >
-        <MenuLink href="/operations/pos">
-          <TbHttpPost />
-          POS
-        </MenuLink>
-
-        <MenuLink href="/cards/recharge">
-          <GiCardExchange />
-          Recharge Cards
-        </MenuLink>
-      </SidebarMenu>
-
+      {/* Cards */}
       <SidebarMenu
         title={
           <div className="flex items-center gap-2">
@@ -112,55 +110,26 @@ const Sidebar: FC = () => {
         </MenuLink>
       </SidebarMenu>
 
-      <Protect roles={[roles.superAdmin]}>
-        <SidebarMenu
-          title={
-            <div className="flex items-center gap-2">
-              <FaHourglassStart className="h-5 w-5 shrink-0" />
-              <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
-                Parking Management
-              </span>
-            </div>
-          }
-        >
-          <MenuLink href="#">
-            <GoGear />
-            Configurations
-          </MenuLink>
-
-          <MenuLink href="#">
-            <VscDebugStart />
-            Parking Categories
-          </MenuLink>
-
-          <MenuLink href="#">
-            <VscDebugStart />
-            Parking Dispensers
-          </MenuLink>
-        </SidebarMenu>
-      </Protect>
-
+      {/* Parking Operations */}
       <SidebarMenu
         title={
           <div className="flex items-center gap-2">
-            <FaHourglassStart className="h-5 w-5 shrink-0" />
+            <GrUserWorker className="h-5 w-5 shrink-0" />
             <span className="absolute left-7 opacity-0 scale-x-0 group-[.open]:opacity-100 group-[.open]:scale-x-100 transition-all duration-300 origin-left whitespace-nowrap">
-              {t("shiftActions")}
+              Parking Operations
             </span>
           </div>
         }
       >
-        <div className="space-y-3 mt-2">
-          <button className="flex items-center gap-2">
-            <VscDebugStart />
-            {t("startShift")}
-          </button>
+        <MenuLink href="/operations/pos">
+          <TbHttpPost />
+          POS
+        </MenuLink>
 
-          <button className="flex items-center gap-2">
-            <BsFillStopFill />
-            {t("endShift")}
-          </button>
-        </div>
+        <MenuLink href="/cards/recharge">
+          <GiCardExchange />
+          Recharge Cards
+        </MenuLink>
       </SidebarMenu>
     </div>
   );
