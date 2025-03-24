@@ -14,18 +14,20 @@ export default function AppLayout({ children }: { children: ReactNode }) {
 
   return (
     <main className={`h-screen w-screen overflow-hidden flex group ${isSidebarOpen ? "open" : ""}`}>
-      <section className="p-2 pb-8 flex flex-col bg-primary-dark dark:bg-grey-darker overflow-hidden transition-all duration-500 ease-in-out w-16 min-w-16 group-[.open]:w-72 group-[.open]:min-w-72">
+      <section className="p-1 pb-8 flex flex-col bg-primary-dark dark:bg-grey-darker overflow-hidden transition-all duration-500 ease-in-out w-16 min-w-16 group-[.open]:w-80 group-[.open]:min-w-80">
         <div className="h-16 transition-all duration-500 ease-in-out origin-left scale-x-0 group-[.open]:scale-x-100">
           <Image src="/images/logo-white.png" className="h-14 w-max" width={500} height={306} alt="logo" />
         </div>
 
-        <nav className="flex-grow overflow-y-auto overflow-x-hiddn overflow-overlay my-4">
+        <nav className="flex-grow overflow-y-auto overflow-x-hiddn overflow-overlay my-4 pe-1">
           <Sidebar />
         </nav>
 
-        <LogoutButton className="mt-auto flex items-center gap-2 h-10 rounded-lg  p-2 text-white justify-center bg-red-500 relative">
-          <LuLogOut className="size-5" />
-          <span className="hidden group-[.open]:block">Logout</span>
+        <LogoutButton className="mt-auto flex items-center h-10 rounded-lg  p-2 text-white justify-center bg-red-500 relative">
+          <LuLogOut className="size-5 shrink-0" />
+          <span className="duration-300 overflow-hidden w-0 min-w-0 group-[.open]:w-14 group-[.open]:max-w-44">
+            Logout
+          </span>
         </LogoutButton>
       </section>
 

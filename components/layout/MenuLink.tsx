@@ -8,6 +8,7 @@ import React, { FC, ReactNode } from "react";
 interface IProps {
   href: string;
   children: ReactNode;
+  title?: string;
 }
 
 const MenuLink: FC<IProps> = (props) => {
@@ -17,10 +18,11 @@ const MenuLink: FC<IProps> = (props) => {
   return (
     <Link
       href={props.href}
-      className={clsx("flex items-center gap-2 w-full p-3 rounded-lg relative", {
+      className={clsx("flex items-center gap-2 w-full p-3 rounded-lg relative text-start", {
         "text-grey bg-grey-lighter dark:bg-grey": isActive,
         "text-grey-lighter dark:text-grey-light hover:bg-grey-lighter hover:text-grey": !isActive,
       })}
+      title={props.title}
     >
       {props.children}
     </Link>

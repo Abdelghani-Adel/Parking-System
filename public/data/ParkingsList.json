@@ -1,0 +1,31 @@
+{
+  "records": [
+    {
+      "id": "1",
+      "name": "Parking 1",
+      "type": "fixed",
+      "dispensers": [{}],
+      "currency": "EGP",
+      "feesType": "round 1 hour",
+      "lostTicketFees": 10
+    },
+    {
+      "id": "2",
+      "name": "Parking 2",
+      "type": "variable",
+      "dispensers": [{}],
+      "currency": "EGP",
+      "feesType": "exact",
+      "lostTicketFees": 10
+    },
+    {
+      "id": "3",
+      "name": "Parking 3",
+      "type": "fixed",
+      "dispensers": [{}],
+      "currency": "EGP",
+      "feesType": "round 1 hour",
+      "lostTicketFees": 10
+    }
+  ]
+}

@@ -15,15 +15,19 @@ const SidebarMenu = ({ title, children }: SidebarMenuProps) => {
     <div className="text-grey-light dark:text-grey-light">
       {/* Menu Toggle Button */}
       <button
-        className="flex items-center gap-2 w-full p-3 rounded-lg hover:bg-grey"
+        className="items-center gap-2 w-full p-3 rounded-lg hover:bg-grey hidden group-[.open]:flex"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span className="relative">{title}</span>
+        {title}
         <FiChevronDown className={`ms-auto transition hidden group-[.open]:block ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {/* Collapsible Section */}
-      {isOpen && <div className="ms-6 space-y-1 hidden group-[.open]:block">{children}</div>}
+      <div
+        className={`duration-300 ms-0 group-[.open]:ms-6 group-[.open]:${isOpen ? "block" : "hidden"} space-y-2 mt-2`}
+      >
+        {children}
+      </div>
     </div>
   );
 };

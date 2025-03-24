@@ -109,6 +109,10 @@
   @apply min-w-full;
 }
 
+.muidatatable th .MuiButtonBase-root {
+  @apply p-0 m-0 !important;
+}
+
 .muidatatable th {
   @apply p-2 text-start dark:text-white text-sm bg-grey-light dark:bg-grey-darker !important;
 }
