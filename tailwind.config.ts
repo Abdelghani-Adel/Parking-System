@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         english: ["Inter", "sans-serif"],
         arabic: ["Cairo", "Noto Kufi Arabic", "ui-sans-serif", "system-ui"],
+        sans: ["sans-serif", "SF Pro"],
       },
       colors: {
         primary: {

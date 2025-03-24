@@ -51,7 +51,7 @@ const LanguageToggle = () => {
 const English = () => {
   return (
     <div className="flex items-center gap-2">
-      <Image src="/icons/english.png" alt="Arabic" width={20} height={20} />
+      <Image src="/icons/english.png" alt="English" width={20} height={20} />
       English
     </div>
   );
