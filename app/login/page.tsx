@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <div className="bg-gradient-to-r from-primary to-primary-darker animated-gradient h-screen w-screen flex items-center justify-center">
       <div className="absolute top-10">
-        <Image src="/images/logo-white.png" className="h-20 w-max" width={500} height={306} alt="logo" />
+        <img src="/images/logo-white.png" className="h-20 w-max" width={500} height={306} alt="logo" />
       </div>
 
       <div className="bg-primary-light p-10 rounded-xl w-[40rem] text-white">
