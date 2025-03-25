@@ -4,11 +4,6 @@ import { decodeToken, protectedRoutes, TOKEN_KEY } from "./utils/auth";
 export function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
-  // Allow public routes.
-  if (pathname.startsWith("/login") || pathname === "/unauthorized") {
-    return NextResponse.next();
-  }
-
   // Extract the token.
   const token = req.cookies.get(TOKEN_KEY)?.value;
 
@@ -32,5 +27,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|/favicon.ico|/images).*)"],
+  matcher: ["/((?!login|unauthorized|images|favicon.ico|_next/static|_next/image).*)"],
 };
