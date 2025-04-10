@@ -1,10 +1,11 @@
+"use client";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { IParking } from "@/services/getParkingsList";
 
 interface FormParkingProps {
-  initialValues?: Partial<IParking>;
+  initialValues?: string[] | null | undefined;
   mode: "add" | "edit";
   onSubmit: (data: Partial<IParking>) => void; // Callback on form submit
 }
@@ -15,14 +16,14 @@ const FormParking: React.FC<FormParkingProps> = ({ initialValues, mode, onSubmit
     control,
     formState: { errors },
   } = useForm<Partial<IParking>>({
-    defaultValues: initialValues || {
-      id: "",
-      name: "",
-      currency: "",
-      feesType: "",
-      type: "",
-      lostTicketFees: 10,
-      dispensers: [],
+    defaultValues: {
+      id: initialValues?.[0] ?? "",
+      name: initialValues?.[1] ?? "",
+      type: initialValues?.[2] ?? "",
+      currency: initialValues?.[3] ?? "",
+      feesType: initialValues?.[4] ?? "",
+      lostTicketFees: initialValues?.[5] ?? "0",
+      // dispensers: initialValues?.dispensers ?? [],
     },
   });
 
@@ -42,6 +43,36 @@ const FormParking: React.FC<FormParkingProps> = ({ initialValues, mode, onSubmit
               error={!!errors.name}
               helperText={errors.name?.message}
             />
+          )}
+        />
+      </FormControl>
+
+      <FormControl fullWidth>
+        <Controller
+          name="lostTicketFees"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Lost Ticket Fees"
+              variant="outlined"
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
+          )}
+        />
+      </FormControl>
+
+      <FormControl fullWidth>
+        <InputLabel id="role-label">Calculation Mode</InputLabel>
+        <Controller
+          name="type"
+          control={control}
+          render={({ field }) => (
+            <Select {...field} labelId="role-label" label="Role">
+              <MenuItem value="per hour">Per Hour</MenuItem>
+              <MenuItem value="per entry">Per Entry</MenuItem>
+            </Select>
           )}
         />
       </FormControl>

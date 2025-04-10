@@ -13,7 +13,7 @@ export interface IParking {
   dispensers: {}[];
   currency: string;
   feesType: string;
-  lostTicketFees: number;
+  lostTicketFees: string;
 }
 
 export interface IParkingListResponse {

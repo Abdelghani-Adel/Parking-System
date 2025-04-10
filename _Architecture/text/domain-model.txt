@@ -1,0 +1,77 @@
+Entities:-
+System
+Parking
+ParkingType
+Transaction
+TransactioType
+Card
+CardType
+Ticket
+Vehicle
+Tag
+Dispenser
+
+System:-
+- parkingList
+- fixedFees.
+- hourlyRate.
+- storedValueCard hourlyRate.
+- storedValueCard fixedRate.
+
+Parking:-
+- name.
+- dispenserList.
+- parkingType.
+- feesType.
+- vat.
+- hiddenFees.
+- lostTicketFees.
+- fixedFees.
+- hourlyRate.
+
+subscriperCard:-
+- cardNumber.
+- entryLimit.
+- startDate.
+- endDate.
+- isActive.
+- allowdVehicles ?
+- allowedParkings ?
+- tagId ?
+- hourlyRate ?
+- parkingList ?
+
+managerCard:-
+- cardNumber.
+- isActive.
+- allowedParkings ?
+
+storedValueCard:-
+- cardNumber.
+- isActive.
+- balance.
+- allowedVahicles ?
+- allowedParkings ?
+- hourlyRate ?
+- parkingList ?
+
+vehicle:-
+- vehicleType.
+- fees.
+- rate.
+
+dispenser:-
+- name.
+- ip.
+- status.
+
+
+
+
+
+
+
+
+
+
+

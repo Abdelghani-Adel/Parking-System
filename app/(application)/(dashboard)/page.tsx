@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <section className="p-4 flex-grow bg-gray-200 dark:bg-black">
+    <section>
       <Protect roles={[roles.superAdmin]}>
         <DashboardForSuperAdmin />
       </Protect>
