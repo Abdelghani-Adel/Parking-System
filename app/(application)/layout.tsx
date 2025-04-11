@@ -7,8 +7,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <Sidebar />
+
       <main className="flex-grow">
-        <section className="p-2 shadow-md">
+        <section className="">
           <TopBar />
         </section>
 

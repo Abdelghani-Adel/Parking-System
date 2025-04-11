@@ -23,7 +23,7 @@
     background-color: #666666;
   }
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -115,14 +115,13 @@
   }
 
   .dashboard-card {
-    @apply bg-white dark:bg-grey-darker dark:text-grey-light rounded-lg p-4;
+    @apply bg-white dark:bg-sidebar dark:text-sidebar-foreground rounded-lg p-4;
   }
 }
 
 @layer utilities {
   .overflow-overlay {
     scrollbar-gutter: stable;
-    /* overflow: overlay; */
   }
 }
 
@@ -170,20 +169,28 @@
   }
 }
 
+.muidatatable {
+  @apply border border-sidebar dark:border-sidebar-foreground rounded-xl overflow-hidden;
+}
+
 .muidatatable .MuiToolbar-root {
-  @apply bg-primary dark:bg-grey-darker min-h-0 py-2;
+  @apply bg-sidebar dark:bg-sidebar min-h-0 py-2;
 }
 
 .muidatatable table {
   @apply min-w-full;
 }
 
+.muidatatable .MuiTableBody-root {
+  @apply dark:bg-sidebar-accent;
+}
+
 .muidatatable th .MuiButtonBase-root {
-  @apply p-0 m-0 !important;
+  @apply p-0 m-0 justify-start !important;
 }
 
 .muidatatable th {
-  @apply p-2 text-start dark:text-white text-sm bg-grey-light dark:bg-grey-darker !important;
+  @apply p-2 text-start text-white dark:text-sidebar-foreground bg-sidebar text-sm  !important;
 }
 
 .muidatatable th * {
@@ -191,11 +198,11 @@
 }
 
 .muidatatable tbody td {
-  @apply px-2 py-3 !important;
+  @apply px-2 py-3 dark:text-sidebar-foreground text-start !important;
 }
 
 .muidatatable .MuiInputBase-input {
-  @apply px-2;
+  @apply px-2 dark:bg-white rounded-md;
 }
 .muidatatable .MuiInputBase-root::before {
   border-bottom: none !important;

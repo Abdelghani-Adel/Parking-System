@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "Truck",
+    "perHour": "10",
+    "perEntry": "20"
+  },
+  {
+    "id": "2",
+    "name": "Limosine",
+    "perHour": "5",
+    "perEntry": "15"
+  },
+  {
+    "id": "3",
+    "name": "Motorcycle",
+    "perHour": "5",
+    "perEntry": "10"
+  }
+]

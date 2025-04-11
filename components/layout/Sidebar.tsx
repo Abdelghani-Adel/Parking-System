@@ -28,11 +28,25 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/shadcn/ui/tooltip
 import { FC, ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Sidebar = () => {
   return (
-    <ShadcnSidebar collapsible="icon" variant="sidebar">
+    <ShadcnSidebar collapsible="icon" variant="sidebar" className="rtl:right-0 rtl:left-auto ltr:left-0">
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild className="h-max hover:bg-transparent">
+                <Link href="/" className="flex items-center">
+                  <Image src="/icons/white-logo-icon.png" alt="MyCompany Logo" width={40} height={40} />
+                  <Image src="/images/white-text-logo.png" alt="MyCompany Logo" width={140} height={50} />
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
         <SidebarGroup>
           <SidebarMenu>
             <SideLink href="/" icon={<LayoutDashboard />} label="Dashboard" tooltip="dashboard" />

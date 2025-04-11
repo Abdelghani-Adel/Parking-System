@@ -12,7 +12,7 @@ const TopBar: FC = () => {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center bg-white dark:bg-sidebar p-2 shadow-md">
       <button onClick={toggleSidebar}>
         <Menu />
       </button>

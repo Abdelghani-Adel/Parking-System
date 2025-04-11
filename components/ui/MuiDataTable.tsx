@@ -8,9 +8,16 @@ interface MUIDatatableProps {
   columns: MUIDataTableColumn[]; // Accepts both strings or objects for more customization
   data: Array<Array<string | number | boolean>>; // 2D array for data
   options?: MUIDataTableOptions; // Custom options (optional)
+  disableToolbar?: boolean;
 }
 
-const MUIDatatable: React.FC<MUIDatatableProps> = ({ title = "Data Table", columns, data, options }) => {
+const MUIDatatable: React.FC<MUIDatatableProps> = ({
+  title = "Data Table",
+  columns,
+  data,
+  options,
+  disableToolbar,
+}) => {
   const defaultOptions: MUIDataTableOptions = {
     filterType: "multiselect",
     responsive: "standard",

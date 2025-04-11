@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/shadcn/ui/button";
 const Page = () => {
   return (
     <div>
-      <h1 className="text-2xl font-bold">System Configurations</h1>
+      <h1 className="text-2xl font-bold mb-5">System Configurations</h1>
 
-      <div className="grid grid-cols-3 gap-5 mt-5">
+      <div className="grid grid-cols-3 gap-5">
         <div className="grid w-fullitems-center gap-1.5">
           <Label htmlFor="email">Per Hour Fees</Label>
           <Input type="number" id="email" placeholder="Per Hour Fees" />

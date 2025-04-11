@@ -20,9 +20,9 @@ const Notifications = () => {
     <div>
       <button
         onClick={handleClick}
-        className="flex items-center gap-2 bg-grey-light dark:bg-grey hover:text-primary px-2 py-2 rounded-full"
+        className="flex items-center gap-2 bg-sidebar-accent hover:text-primary px-2 py-2 rounded-full"
       >
-        <IoMdNotificationsOutline className="text-3xl" />
+        <IoMdNotificationsOutline className="text-2xl" />
       </button>
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose} PopoverClasses={{ paper: "w-96 py-2 px-3" }}>

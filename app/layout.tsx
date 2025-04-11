@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html>
-      <body className="font-sans">
+      <body className="font-sans bg-gray-50 dark:bg-black">
         <LanguageProvider>
           {children}
           <div id="modalContainer" />

@@ -1,60 +1,26 @@
 "use client";
 
-import { getParkingsList, IParking } from "@/services/getParkingsList";
-import { Ban, Pencil, Trash2 } from "lucide-react";
+import useParkingsList from "@/hooks/useParkingsList";
 import { MUIDataTableColumn } from "mui-datatables";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaUserAltSlash } from "react-icons/fa";
 import { FaUserXmark } from "react-icons/fa6";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import MUIDatatable from "../ui/MuiDataTable";
 import MuiModal from "../ui/MuiModal";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/shadcn/ui/sheet";
-import useParkingsList from "@/hooks/useParkingsList";
 import { Button } from "../ui/shadcn/ui/button";
-import { Label } from "../ui/shadcn/ui/label";
-import { Input } from "../ui/shadcn/ui/input";
 import { Checkbox } from "../ui/shadcn/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/shadcn/ui/select";
+import { Input } from "../ui/shadcn/ui/input";
+import { Label } from "../ui/shadcn/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/shadcn/ui/select";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "../ui/shadcn/ui/sheet";
 
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/shadcn/ui/dropdown-menu";
 import { Separator } from "../ui/shadcn/ui/separator";
 
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
+import { TbCancel } from "react-icons/tb";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/shadcn/ui/table";
-
-const parkingTypeColors: Record<string, string> = {
-  "per entry": "bg-green-200 text-green-700",
-  "per hour": "bg-blue-200 text-blue-700",
-};
-
-const calcModeColors: Record<string, string> = {
-  "round 1 hour": "bg-green-200 text-green-700",
-  exact: "bg-blue-200 text-blue-700",
-};
 
 const TableParkings: React.FC = () => {
   const parkings = useParkingsList();
@@ -81,26 +47,12 @@ const TableParkings: React.FC = () => {
     },
     {
       name: "Type",
-      options: {
-        customBodyRender: (value: any) => {
-          return (
-            <span className={`p-3 rounded px-2 py-1 text-xs font-semibold ${parkingTypeColors[value]}`}>{value}</span>
-          );
-        },
-      },
     },
     {
       name: "Currency",
     },
     {
       name: "Calculation Mode",
-      options: {
-        customBodyRender: (value: any) => {
-          return (
-            <span className={`p-3 rounded px-2 py-1 text-xs font-semibold ${calcModeColors[value]}`}>{value}</span>
-          );
-        },
-      },
     },
     {
       name: "Lost Ticket Fees",
@@ -122,15 +74,15 @@ const TableParkings: React.FC = () => {
               }}
             >
               <button title="Edit" onClick={() => setIsEditing(true)}>
-                <Pencil className="text-blue-500" />
+                <FaRegEdit className="text-blue-500" />
               </button>
 
               <button title="Suspend" onClick={() => setIsSuspending(true)}>
-                <Ban className="text-yellow-500" />
+                <TbCancel className="text-yellow-500" />
               </button>
 
               <button title="Delete" onClick={() => setIsDeleting(true)}>
-                <Trash2 className="text-red-500" />
+                <MdOutlineDelete className="text-red-500" />
               </button>
             </div>
           );
