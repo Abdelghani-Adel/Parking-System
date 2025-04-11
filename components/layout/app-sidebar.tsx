@@ -30,7 +30,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
-const SideBar = () => {
+const AppSidebar = () => {
   return (
     <ShadcnSidebar collapsible="icon" variant="sidebar" className="rtl:right-0 rtl:left-auto ltr:left-0">
       <SidebarContent>
@@ -165,4 +165,4 @@ const SideLink: FC<SideLinkProps> = (props) => {
   );
 };
 
-export default SideBar;
+export default AppSidebar;
