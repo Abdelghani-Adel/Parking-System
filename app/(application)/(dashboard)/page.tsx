@@ -1,8 +1,8 @@
 import Protect from "@/components/layout/Protect";
-import DashboardForAdmin from "@/components/molecules/DashboardForAdmin";
-import DashboardForOperator from "@/components/molecules/DashboardForOperator";
-import DashboardForSuperAdmin from "@/components/molecules/DashboardForSuperAdmin";
-import DashboardForSupervisor from "@/components/molecules/DashboardForSupervisor";
+import DashboardForAdmin from "@/components/molecules/dashboard/admin";
+import DashboardForOperator from "@/components/molecules/dashboard/operator";
+import DashboardForSuperAdmin from "@/components/molecules/dashboard/super-admin";
+import DashboardForSupervisor from "@/components/molecules/dashboard/super-visor";
 import { roles } from "@/utils/auth";
 import { Metadata } from "next";
 

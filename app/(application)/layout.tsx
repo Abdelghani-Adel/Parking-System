@@ -1,5 +1,5 @@
 import AppSidebar from "@/components/layout/app-sidebar";
-import TopBar from "@/components/layout/TopBar";
+import TopBar from "@/components/layout/app-topbar";
 import { SidebarProvider } from "@/components/ui/shadcn/ui/sidebar";
 import { ReactNode } from "react";
 

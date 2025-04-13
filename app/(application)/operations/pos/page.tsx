@@ -1,4 +1,4 @@
-import TicketPayment from "@/components/molecules/TicketPayment";
+import TicketPayment from "@/components/molecules/dashboard/TicketPayment";
 import React from "react";
 
 const Page = () => {

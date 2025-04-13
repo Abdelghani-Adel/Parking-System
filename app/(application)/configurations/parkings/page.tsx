@@ -1,16 +1,7 @@
-import TableParkings from "@/components/molecules/TableParkings";
-import React from "react";
+import ParkingScreen from "@/components/modules/parking/parking-screen";
 
 const Page = () => {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold">Parkings Configurations</h1>
-
-      <section className="mt-5">
-        <TableParkings />
-      </section>
-    </div>
-  );
+  return <ParkingScreen />;
 };
 
 export default Page;

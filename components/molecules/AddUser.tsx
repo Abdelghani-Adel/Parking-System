@@ -5,7 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import FormUser from "./FormUser";
+import FormUser from "./forms/form-user";
 
 const AddUser = () => {
   const { t } = useLanguage();

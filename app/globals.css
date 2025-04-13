@@ -177,6 +177,10 @@
   @apply bg-sidebar dark:bg-sidebar min-h-0 py-2;
 }
 
+.muidatatable .tss-qbo1l6-MUIDataTableToolbar-actions {
+  @apply flex justify-end;
+}
+
 .muidatatable table {
   @apply min-w-full;
 }

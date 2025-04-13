@@ -50,6 +50,7 @@ const AppSidebar = () => {
         <SidebarGroup>
           <SidebarMenu>
             <SideLink href="/" icon={<LayoutDashboard />} label="Dashboard" tooltip="dashboard" />
+            <SideLink href="/configurations/users" icon={<Users />} label="Users" tooltip="users" />
           </SidebarMenu>
         </SidebarGroup>
 
@@ -66,27 +67,13 @@ const AppSidebar = () => {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SideLink
-                    href="/configurations/system"
-                    icon={<MonitorCog />}
-                    label="System"
-                    tooltip="System Configurations"
-                  />
-
-                  <SideLink
                     href="/configurations/parkings"
                     icon={<SquareParking />}
                     label="Parkings"
                     tooltip="Parkings Configurations"
                   />
 
-                  <SideLink href="/configurations/users" icon={<Users />} label="Users" tooltip="users" />
-
-                  <SideLink
-                    href="/configurations/cards"
-                    icon={<IdCard />}
-                    label="Cards"
-                    tooltip="Cards Configurations"
-                  />
+                  <SideLink href="/configurations/categories" icon={<Car />} label="Categories" tooltip="Categories" />
 
                   <SideLink
                     href="/configurations/dispensers"
@@ -95,14 +82,14 @@ const AppSidebar = () => {
                     tooltip="Dispensers Configurations"
                   />
 
-                  <SideLink href="/configurations/tags" icon={<Tag />} label="Tags" tooltip="Tags Configurations" />
-
                   <SideLink
-                    href="/configurations/vehicle-categories"
-                    icon={<Car />}
-                    label="Vehicle Categories"
-                    tooltip="Vahicle Categories"
+                    href="/configurations/cards"
+                    icon={<IdCard />}
+                    label="Cards"
+                    tooltip="Cards Configurations"
                   />
+
+                  <SideLink href="/configurations/tags" icon={<Tag />} label="Tags" tooltip="Tags Configurations" />
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "dispenser 1",
+    "parkingId": "1",
+    "parkingName": "Parking 1",
+    "ip": "192.168.20.11"
+  },
+  {
+    "id": "2",
+    "name": "dispenser 2",
+    "parkingId": "2",
+    "parkingName": "Parking 2",
+    "ip": "192.168.20.12"
+  },
+  {
+    "id": "3",
+    "name": "dispenser 3",
+    "parkingId": "3",
+    "parkingName": "Parking 3",
+    "ip": "192.168.20.13"
+  }
+]
