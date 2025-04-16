@@ -50,7 +50,7 @@ const AppSidebar = () => {
         <SidebarGroup>
           <SidebarMenu>
             <SideLink href="/" icon={<LayoutDashboard />} label="Dashboard" tooltip="dashboard" />
-            <SideLink href="/configurations/users" icon={<Users />} label="Users" tooltip="users" />
+            <SideLink href="/users" icon={<Users />} label="Users" tooltip="users" />
           </SidebarMenu>
         </SidebarGroup>
 
@@ -82,14 +82,38 @@ const AppSidebar = () => {
                     tooltip="Dispensers Configurations"
                   />
 
-                  <SideLink
+                  {/* <SideLink
                     href="/configurations/cards"
                     icon={<IdCard />}
                     label="Cards"
                     tooltip="Cards Configurations"
-                  />
+                  /> */}
 
                   <SideLink href="/configurations/tags" icon={<Tag />} label="Tags" tooltip="Tags Configurations" />
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
+
+        <Collapsible defaultOpen>
+          <SidebarGroup>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger>
+                Cards
+                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SideLink
+                    href="/cards/configurations"
+                    icon={<IdCard />}
+                    label="Cards Configurations"
+                    tooltip="Cards Configurations"
+                  />
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>
