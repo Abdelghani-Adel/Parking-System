@@ -1,16 +1,14 @@
-import AddUser from "@/components/molecules/AddUser";
-import UserTable from "@/components/molecules/tables/user";
-import { getUsersList } from "@/services/getUsersList";
-import { FaUsersBetweenLines } from "react-icons/fa6";
+import UserTable from "@/components__/organisms/tables/UserTable";
 
 const Page = async () => {
-  const users = await getUsersList();
-
   return (
-    <div className="p-4 space-y-4">
-      <AddUser />
-      <UserTable users={users.records} />
-    </div>
+    <>
+      <h1 className="text-2xl font-bold">Users Setup</h1>
+
+      <section className="mt-5">
+        <UserTable />
+      </section>
+    </>
   );
 };
 

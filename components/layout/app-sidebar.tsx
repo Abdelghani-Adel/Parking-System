@@ -1,5 +1,6 @@
 "use client";
 
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/shadcn/ui/collapsible";
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent,
@@ -10,25 +11,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/shadcn/ui/sidebar";
-import {
-  Car,
-  ChevronDown,
-  Cog,
-  Contrast,
-  DollarSign,
-  IdCard,
-  LayoutDashboard,
-  MonitorCog,
-  SquareParking,
-  Tag,
-  Users,
-} from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/shadcn/ui/collapsible";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/shadcn/ui/tooltip";
-import { FC, ReactNode } from "react";
+import { Car, ChevronDown, Contrast, DollarSign, IdCard, LayoutDashboard, SquareParking, Users } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import { FC, ReactNode } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/shadcn/ui/tooltip";
 
 const AppSidebar = () => {
   return (
@@ -58,7 +46,7 @@ const AppSidebar = () => {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
-                Configurations
+                Parking
                 <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -66,30 +54,11 @@ const AppSidebar = () => {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SideLink
-                    href="/configurations/parkings"
-                    icon={<SquareParking />}
-                    label="Parkings"
-                    tooltip="Parkings Configurations"
-                  />
+                  <SideLink href="/parking/setup" icon={<SquareParking />} label="Setup" tooltip="Parkings Setup" />
 
-                  <SideLink href="/configurations/categories" icon={<Car />} label="Categories" tooltip="Categories" />
+                  <SideLink href="/parking/categories" icon={<Car />} label="Categories" tooltip="Categories" />
 
-                  <SideLink
-                    href="/configurations/dispensers"
-                    icon={<Contrast />}
-                    label="Dispensers"
-                    tooltip="Dispensers Configurations"
-                  />
-
-                  {/* <SideLink
-                    href="/configurations/cards"
-                    icon={<IdCard />}
-                    label="Cards"
-                    tooltip="Cards Configurations"
-                  /> */}
-
-                  <SideLink href="/configurations/tags" icon={<Tag />} label="Tags" tooltip="Tags Configurations" />
+                  <SideLink href="/parking/dispensers" icon={<Contrast />} label="Dispensers" tooltip="Dispensers" />
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>
@@ -108,12 +77,8 @@ const AppSidebar = () => {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SideLink
-                    href="/cards/configurations"
-                    icon={<IdCard />}
-                    label="Cards Configurations"
-                    tooltip="Cards Configurations"
-                  />
+                  <SideLink href="/cards/setup" icon={<IdCard />} label="Setup" tooltip="Cards Setup" />
+                  <SideLink href="/cards/list" icon={<IdCard />} label="List" tooltip="Cards List" />
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>

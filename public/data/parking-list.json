@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "Parking 1",
+    "type": "perEntry",
+    "dispensers": [{}],
+    "currency": "EGP",
+    "feesType": "round",
+    "lostTicketFees": "10",
+    "vat": "14"
+  },
+  {
+    "id": "2",
+    "name": "Parking 2",
+    "type": "perHour",
+    "dispensers": [{}],
+    "currency": "EGP",
+    "feesType": "exact",
+    "lostTicketFees": "10",
+    "vat": "14"
+  },
+  {
+    "id": "3",
+    "name": "Parking 3",
+    "type": "perHour",
+    "dispensers": [{}],
+    "currency": "EGP",
+    "feesType": "round",
+    "lostTicketFees": "10",
+    "vat": "14"
+  }
+]
