@@ -2,31 +2,52 @@
   {
     "id": "1",
     "name": "Parking 1",
-    "type": "perEntry",
-    "dispensers": [{}],
     "currency": "EGP",
-    "feesType": "round",
+    "vat": "14",
     "lostTicketFees": "10",
-    "vat": "14"
+    "lostCardFees": "50",
+    "capacity": "50",
+    "gracePeriod": "5",
+    "address": "123 st.",
+    "isActive": true,
+    "workingDays": ["2", "3", "4", "5", "6"],
+    "workingHours": {
+      "from": "06:00:00 am",
+      "to": "08:00:00 pm"
+    }
   },
   {
     "id": "2",
     "name": "Parking 2",
-    "type": "perHour",
-    "dispensers": [{}],
     "currency": "EGP",
-    "feesType": "exact",
+    "vat": "14",
     "lostTicketFees": "10",
-    "vat": "14"
+    "lostCardFees": "50",
+    "capacity": "50",
+    "gracePeriod": "5",
+    "address": "123 st.",
+    "isActive": true,
+    "workingDays": ["2", "3", "4", "5", "6"],
+    "workingHours": {
+      "from": "06:00:00 am",
+      "to": "08:00:00 pm"
+    }
   },
   {
     "id": "3",
     "name": "Parking 3",
-    "type": "perHour",
-    "dispensers": [{}],
     "currency": "EGP",
-    "feesType": "round",
+    "vat": "14",
     "lostTicketFees": "10",
-    "vat": "14"
+    "lostCardFees": "50",
+    "capacity": "50",
+    "gracePeriod": "5",
+    "address": "123 st.",
+    "isActive": true,
+    "workingDays": ["2", "3", "4", "5", "6"],
+    "workingHours": {
+      "from": "06:00:00 am",
+      "to": "08:00:00 pm"
+    }
   }
 ]

@@ -1,4 +1,4 @@
-import ParkingTable from "@/components__/organisms/tables/ParkingTable";
+import ParkingTable from "@/components/organisms/tables/ParkingTable";
 
 const Page = () => {
   return (

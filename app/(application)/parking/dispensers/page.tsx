@@ -1,4 +1,4 @@
-import DispenserTable from "@/components__/organisms/tables/DispenserTable";
+import DispenserTable from "@/components/organisms/tables/DispenserTable";
 import React from "react";
 
 const Page = () => {

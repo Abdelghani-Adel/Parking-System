@@ -55,9 +55,13 @@ const AppSidebar = () => {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SideLink href="/parking/setup" icon={<SquareParking />} label="Setup" tooltip="Parkings Setup" />
-
-                  <SideLink href="/parking/categories" icon={<Car />} label="Categories" tooltip="Categories" />
-
+                  <SideLink href="/parking/plans" icon={<SquareParking />} label="Plans" tooltip="Parkings Plans" />
+                  <SideLink
+                    href="/parking/policies"
+                    icon={<SquareParking />}
+                    label="Policies"
+                    tooltip="Parkings Policies"
+                  />
                   <SideLink href="/parking/dispensers" icon={<Contrast />} label="Dispensers" tooltip="Dispensers" />
                 </SidebarMenu>
               </SidebarGroupContent>
@@ -77,8 +81,28 @@ const AppSidebar = () => {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SideLink href="/cards/setup" icon={<IdCard />} label="Setup" tooltip="Cards Setup" />
                   <SideLink href="/cards/list" icon={<IdCard />} label="List" tooltip="Cards List" />
+                  <SideLink href="/cards/reports" icon={<IdCard />} label="Reports" tooltip="Reports" />
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
+
+        <Collapsible defaultOpen>
+          <SidebarGroup>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger>
+                Tags
+                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SideLink href="/tags/list" icon={<IdCard />} label="List" tooltip="Cards List" />
+                  <SideLink href="/tags/reports" icon={<IdCard />} label="Reports" tooltip="Reports" />
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>

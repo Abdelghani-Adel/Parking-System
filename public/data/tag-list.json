@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "tagNumber": "12345",
+    "name": "Tag 1",
+    "type": "manager",
+    "plan": "",
+    "policies": ["policy 1"],
+    "startDate": "20/04/2025",
+    "endDate": "20/07/2025"
+  },
+  {
+    "id": "2",
+    "tagNumber": "12345",
+    "name": "Tag 2",
+    "type": "plan",
+    "plan": "plan 1",
+    "policies": ["policy 1"],
+    "startDate": "20/04/2025",
+    "endDate": "20/07/2025"
+  },
+  {
+    "id": "3",
+    "tagNumber": "12345",
+    "name": "Tag 3",
+    "type": "manager",
+    "plan": "",
+    "policies": ["policy 1"],
+    "startDate": "20/04/2025",
+    "endDate": "20/07/2025"
+  }
+]

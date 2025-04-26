@@ -1,4 +1,4 @@
-import UserTable from "@/components__/organisms/tables/UserTable";
+import UserTable from "@/components/organisms/tables/UserTable";
 
 const Page = async () => {
   return (
