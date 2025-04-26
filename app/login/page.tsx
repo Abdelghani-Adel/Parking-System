@@ -51,9 +51,8 @@ const Login = () => {
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <div className="absolute top-10">
-            <img src="/images/logo-white.png" className="h-20 w-max" width={500} height={306} alt="logo" /></div>
-        </div>
+            <img src="/images/dark-logo.png" className="h-20 w-max m-auto" width={500} height={306} alt="logo" /></div>
+
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
             <form className={cn("flex flex-col gap-6",)} onSubmit={submitHandler}>
@@ -64,17 +63,12 @@ const Login = () => {
               <div className="grid gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Username</Label>
-                  <Input id="email" type="text" placeholder="m@example.com" onChange={onUsernameChange} />
+                  <Input id="email" type="text" placeholder="ُEnter your username" onChange={onUsernameChange} />
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
-                    <a
-                      href="#"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
-                    >
-                      Forgot your password?
-                    </a>
+                
                   </div>
                   <Input id="password" type="password" onChange={onPasswordChange} />
                 </div>
