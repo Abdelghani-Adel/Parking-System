@@ -12,8 +12,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/shadcn/ui/alert-dialog";
 import { Button } from "@/components/ui/shadcn/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/shadcn/ui/sheet";
-import policyList from "@/public/data/policy-list.json";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/shadcn/ui/sheet";
 import { transformRecordsToTable } from "@/utils/transform";
 import { MUIDataTableColumn } from "mui-datatables";
 import { FC, useState } from "react";
@@ -21,14 +25,21 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import PolicyForm from "../forms/PolicyForm";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 const PolicyTable = () => {
-  const [selectedPolicy, setSelectedPolicy] = useState<string[] | null>();
+  const policyList = useAppSelector((state) => state.policies.data);
+  const [selectedId, setSelectedId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
-  const columnOrder = transformRecordsToTable(policyList, ["id", "name", "dailyMax", "monthlyMax"]);
+  const columnOrder = transformRecordsToTable(policyList, [
+    "id",
+    "name",
+    "dailyMax",
+    "monthlyMax",
+  ]);
 
   const tableHeaders: MUIDataTableColumn[] = [
     {
@@ -53,7 +64,7 @@ const PolicyTable = () => {
           return (
             <ActionsColumn
               clickedRowData={rowData}
-              setSelectedData={(data) => setSelectedPolicy(data)}
+              setSelectedData={(data) => setSelectedId(data[0])}
               onStartEdit={() => setIsEditing(true)}
               onStartDelete={() => setIsDeleting(true)}
             />
@@ -71,14 +82,18 @@ const PolicyTable = () => {
 
   return (
     <>
-      <MUIDatatable options={tableOptions} columns={tableHeaders} data={columnOrder} />
+      <MUIDatatable
+        options={tableOptions}
+        columns={tableHeaders}
+        data={columnOrder}
+      />
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
             <SheetTitle>Editing Policy</SheetTitle>
 
-            <PolicyForm onSubmit={() => {}} id={"1"} />
+            <PolicyForm id={selectedId} />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -88,7 +103,7 @@ const PolicyTable = () => {
           <SheetHeader>
             <SheetTitle>Adding Policy</SheetTitle>
 
-            <PolicyForm onSubmit={() => {}} />
+            <PolicyForm />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -97,7 +112,9 @@ const PolicyTable = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you Sure?</AlertDialogTitle>
-            <AlertDialogDescription>You are deleting this Policy</AlertDialogDescription>
+            <AlertDialogDescription>
+              You are deleting this Policy
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -120,7 +137,10 @@ interface IActionsProps {
 
 const ActionsColumn: FC<IActionsProps> = (props) => {
   return (
-    <div className="flex items-center gap-4 text-xl" onClick={() => props.setSelectedData(props.clickedRowData)}>
+    <div
+      className="flex items-center gap-4 text-xl"
+      onClick={() => props.setSelectedData(props.clickedRowData)}
+    >
       <button title="Edit" onClick={() => props.onStartEdit()}>
         <FaRegEdit className="text-blue-500" />
       </button>
@@ -134,7 +154,11 @@ const ActionsColumn: FC<IActionsProps> = (props) => {
 
 const AddButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button onClick={onClick} className="order-first text-sidebar-foreground text-3xl me-2" title="Add new parking">
+    <button
+      onClick={onClick}
+      className="order-first text-sidebar-foreground text-3xl me-2"
+      title="Add new parking"
+    >
       <IoMdAddCircle />
     </button>
   );

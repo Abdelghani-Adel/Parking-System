@@ -11,6 +11,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { BsFillStopFill } from "react-icons/bs";
 import { LogoutButton } from "./logout-button";
 import { LuLogOut } from "react-icons/lu";
+import axiosInstance from "@/lib/axiosInstance";
 
 const ProfileActions = () => {
   const { t } = useLanguage();
@@ -27,13 +28,21 @@ const ProfileActions = () => {
 
   return (
     <div>
-      <button onClick={handleClick} className="flex items-center gap-2  hover:text-primary px-3 py-2 rounded-full">
+      <button
+        onClick={handleClick}
+        className="flex items-center gap-2  hover:text-primary px-3 py-2 rounded-full"
+      >
         <GoPerson className="text-3xl" />
         <span>Ahmed Mohamed</span>
         <FaChevronDown className="text-xs" />
       </button>
 
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose} PopoverClasses={{ paper: "w-72" }}>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PopoverClasses={{ paper: "w-72" }}
+      >
         <MenuItem>
           <Link href="#" className="flex items-center gap-2">
             <IoSettingsOutline className="text-lg" />

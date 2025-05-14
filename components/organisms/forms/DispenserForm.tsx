@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/shadcn/ui/input";
 import { Label } from "@/components/ui/shadcn/ui/label";
@@ -13,16 +13,48 @@ import {
 } from "@/components/ui/shadcn/ui/select";
 import { Button } from "@/components/ui/shadcn/ui/button";
 import { SheetClose, SheetFooter } from "@/components/ui/shadcn/ui/sheet";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import {
+  createDispenser,
+  IDispenser,
+  updateDispenser,
+} from "@/redux/slices/dispenserSlice";
+import {
+  useDispenserTypesForSelect,
+  useParkingsForSelect,
+} from "@/hooks/selectOptions";
 
 interface Iprops {
   id?: string;
-  onSubmit: (data: any) => void;
 }
 
-const DispenserForm: React.FC<Iprops> = ({ id, onSubmit }) => {
-  const form = useForm();
+const DispenserForm: React.FC<Iprops> = ({ id }) => {
+  const dispatch = useAppDispatch();
+  const dispenserList = useAppSelector((state) => state.dispensers.data);
+  const dispenser = dispenserList.find((item) => item.id === id);
+  const dispenserTypes = useDispenserTypesForSelect();
+  const parkings = useParkingsForSelect();
+
+  const form = useForm<IDispenser>({
+    defaultValues: dispenser ?? {
+      id: "",
+      name: "",
+      parkingId: "",
+      status: "",
+      dispenserUrl: "",
+      dispenserTypeId: "",
+    },
+  });
 
   const { handleSubmit, control } = form;
+
+  const onSubmit = (data: IDispenser) => {
+    if (id) {
+      dispatch(updateDispenser(data));
+    } else {
+      dispatch(createDispenser(data));
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -34,19 +66,29 @@ const DispenserForm: React.FC<Iprops> = ({ id, onSubmit }) => {
           <>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="name">Dispenser Name</Label>
-              <Input {...field} type="text" id="name" placeholder="Enter name of the dispenser" />
+              <Input
+                {...field}
+                type="text"
+                id="name"
+                placeholder="Enter name of the dispenser"
+              />
             </div>
           </>
         )}
       />
 
       <Controller
-        name="ip"
+        name="dispenserUrl"
         control={control}
         render={({ field }) => (
           <div className="grid w-full items-center gap-1.5">
-            <Label htmlFor="ip">IP Address</Label>
-            <Input {...field} type="text" id="ip" placeholder="Enter IP Address" />
+            <Label htmlFor="ip">Dispenser URL</Label>
+            <Input
+              {...field}
+              type="text"
+              id="ip"
+              placeholder="Enter dispenser url"
+            />
           </div>
         )}
       />
@@ -63,8 +105,11 @@ const DispenserForm: React.FC<Iprops> = ({ id, onSubmit }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="2">Entry Dispenser</SelectItem>
-                  <SelectItem value="1">Exit Dispenser</SelectItem>
+                  {dispenserTypes.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -84,8 +129,11 @@ const DispenserForm: React.FC<Iprops> = ({ id, onSubmit }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="1">parking 1</SelectItem>
-                  <SelectItem value="2">parking 2</SelectItem>
+                  {parkings.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>

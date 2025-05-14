@@ -12,8 +12,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/shadcn/ui/alert-dialog";
 import { Button } from "@/components/ui/shadcn/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/shadcn/ui/sheet";
-import parkingList from "@/public/data/parking-list.json";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/shadcn/ui/sheet";
 import { transformRecordsToTable } from "@/utils/transform";
 import { MUIDataTableColumn } from "mui-datatables";
 import { FC, useState } from "react";
@@ -21,37 +25,50 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import ParkingForm from "../forms/ParkingForm";
+import { useAppSelector } from "@/redux/store";
+import { useCurrencyDictionary } from "@/hooks/dictionaries";
 
 const ParkingTable = () => {
-  const [selectedDispenser, setSelectedDispenser] = useState<string[] | null>();
+  const parkings = useAppSelector((state) => state.parkings.data);
+  const currencyDictionary = useCurrencyDictionary();
+
+  const [selectedId, setSelectedId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
-  const columnOrder = transformRecordsToTable(parkingList, [
+  const columnOrder = transformRecordsToTable(parkings, [
     "id",
     "name",
     "currency",
     "vat",
-    "lostTicketFees",
-    "lostCardFees",
+    "is_active",
+    "lost_ticket_fees",
+    "lost_card_fees",
     "capacity",
-    "gracePeriod",
     "address",
   ]);
 
   const tableHeaders: MUIDataTableColumn[] = [
     {
-      name: "id",
+      name: "ID",
     },
     {
       name: "Name",
     },
     {
       name: "Currency",
+      options: {
+        customBodyRender: (value: string) => {
+          return currencyDictionary[value] || value;
+        },
+      },
     },
     {
       name: "Vat",
+    },
+    {
+      name: "Active",
     },
     {
       name: "Lost Ticket Fees",
@@ -61,9 +78,6 @@ const ParkingTable = () => {
     },
     {
       name: "Capacity",
-    },
-    {
-      name: "Grace Period",
     },
     {
       name: "Address",
@@ -78,7 +92,7 @@ const ParkingTable = () => {
           return (
             <ActionsColumn
               clickedRowData={rowData}
-              setSelectedData={(data) => setSelectedDispenser(data)}
+              setSelectedData={(data) => setSelectedId(data[0])}
               onStartEdit={() => setIsEditing(true)}
               onStartDelete={() => setIsDeleting(true)}
             />
@@ -96,14 +110,18 @@ const ParkingTable = () => {
 
   return (
     <>
-      <MUIDatatable options={tableOptions} columns={tableHeaders} data={columnOrder} />
+      <MUIDatatable
+        options={tableOptions}
+        columns={tableHeaders}
+        data={columnOrder}
+      />
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
-            <SheetTitle>Editing Parking</SheetTitle>
+            <SheetTitle className="text-2xl">Edit Parking</SheetTitle>
 
-            <ParkingForm onSubmit={() => {}} id={"1"} />
+            <ParkingForm id={selectedId} onClose={() => setIsEditing(false)} />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -111,9 +129,9 @@ const ParkingTable = () => {
       <Sheet open={isAdding} onOpenChange={setIsAdding}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
-            <SheetTitle>Adding Parking</SheetTitle>
+            <SheetTitle className="text-2xl">Adding Parking</SheetTitle>
 
-            <ParkingForm onSubmit={() => {}} />
+            <ParkingForm onClose={() => setIsAdding(false)} />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -122,7 +140,9 @@ const ParkingTable = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you Sure?</AlertDialogTitle>
-            <AlertDialogDescription>You are deleting this Parking</AlertDialogDescription>
+            <AlertDialogDescription>
+              You are deleting this Parking
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -145,7 +165,10 @@ interface IActionsProps {
 
 const ActionsColumn: FC<IActionsProps> = (props) => {
   return (
-    <div className="flex items-center gap-4 text-xl" onClick={() => props.setSelectedData(props.clickedRowData)}>
+    <div
+      className="flex items-center gap-4 text-xl"
+      onClick={() => props.setSelectedData(props.clickedRowData)}
+    >
       <button title="Edit" onClick={() => props.onStartEdit()}>
         <FaRegEdit className="text-blue-500" />
       </button>
@@ -159,7 +182,11 @@ const ActionsColumn: FC<IActionsProps> = (props) => {
 
 const AddButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button onClick={onClick} className="order-first text-sidebar-foreground text-3xl me-2" title="Add new parking">
+    <button
+      onClick={onClick}
+      className="order-first text-sidebar-foreground text-3xl me-2"
+      title="Add new parking"
+    >
       <IoMdAddCircle />
     </button>
   );

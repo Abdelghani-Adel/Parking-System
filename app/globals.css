@@ -152,6 +152,10 @@
   @apply dark:bg-grey-darker dark:text-white;
 }
 
+.MuiButtonBase-root {
+  text-transform: unset !important;
+}
+
 .animated-gradient {
   background-size: 200% 200%;
   animation: gradient-bg 5s ease infinite;

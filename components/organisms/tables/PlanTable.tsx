@@ -12,8 +12,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/shadcn/ui/alert-dialog";
 import { Button } from "@/components/ui/shadcn/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/shadcn/ui/sheet";
-import plansList from "@/public/data/plans-list.json";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/shadcn/ui/sheet";
 import { transformRecordsToTable } from "@/utils/transform";
 import { MUIDataTableColumn } from "mui-datatables";
 import { FC, useState } from "react";
@@ -21,9 +25,22 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import PlanForm from "../forms/PlanForm";
+import { useAppSelector } from "@/redux/store";
+import {
+  useFeeCalculatorDictionary,
+  useParkingDictionary,
+  useParkingTypesDictionary,
+  usePlanTypesDictionary,
+} from "@/hooks/dictionaries";
 
 const PlanTable = () => {
-  const [selectedPlan, setSelectedPlan] = useState<string[] | null>();
+  const plansList = useAppSelector((state) => state.plans.data);
+  const parkingDictionary = useParkingDictionary();
+  const planDictionary = usePlanTypesDictionary();
+  const feeCalcDictionary = useFeeCalculatorDictionary();
+  const parkingTypeDictionary = useParkingTypesDictionary();
+
+  const [selectedId, setSelectedId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -31,12 +48,11 @@ const PlanTable = () => {
   const columnOrder = transformRecordsToTable(plansList, [
     "id",
     "name",
-    "type",
-    "feesCalculator",
+    "planTypeId",
+    "feesCalculatorId",
     "rate",
-    "parkingType",
-    "parkingName",
-    "categoryTypes",
+    "parkingTypeId",
+    "parkingId",
   ]);
 
   const tableHeaders: MUIDataTableColumn[] = [
@@ -47,22 +63,39 @@ const PlanTable = () => {
       name: "Name",
     },
     {
-      name: "Type",
+      name: "Plan Type",
+      options: {
+        customBodyRender: (value: string) => {
+          return planDictionary[value] || value;
+        },
+      },
     },
     {
       name: "Fees Calculator",
+      options: {
+        customBodyRender: (value: string) => {
+          return feeCalcDictionary[value] || value;
+        },
+      },
     },
     {
       name: "Rate",
     },
     {
       name: "Parking Type",
+      options: {
+        customBodyRender: (value: string) => {
+          return parkingTypeDictionary[value] || value;
+        },
+      },
     },
     {
-      name: "Parking Name",
-    },
-    {
-      name: "Categories",
+      name: "Parking",
+      options: {
+        customBodyRender: (value: string) => {
+          return parkingDictionary[value] || value;
+        },
+      },
     },
     {
       name: "Actions",
@@ -74,7 +107,7 @@ const PlanTable = () => {
           return (
             <ActionsColumn
               clickedRowData={rowData}
-              setSelectedData={(data) => setSelectedPlan(data)}
+              setSelectedData={(data) => setSelectedId(data[0])}
               onStartEdit={() => setIsEditing(true)}
               onStartDelete={() => setIsDeleting(true)}
             />
@@ -92,14 +125,18 @@ const PlanTable = () => {
 
   return (
     <>
-      <MUIDatatable options={tableOptions} columns={tableHeaders} data={columnOrder} />
+      <MUIDatatable
+        options={tableOptions}
+        columns={tableHeaders}
+        data={columnOrder}
+      />
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
             <SheetTitle>Editing Plan</SheetTitle>
 
-            <PlanForm onSubmit={() => {}} id={"1"} />
+            <PlanForm id={selectedId} />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -109,7 +146,7 @@ const PlanTable = () => {
           <SheetHeader>
             <SheetTitle>Adding Plan</SheetTitle>
 
-            <PlanForm onSubmit={() => {}} />
+            <PlanForm />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -118,7 +155,9 @@ const PlanTable = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you Sure?</AlertDialogTitle>
-            <AlertDialogDescription>You are deleting this Plan</AlertDialogDescription>
+            <AlertDialogDescription>
+              You are deleting this Plan
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -141,7 +180,10 @@ interface IActionsProps {
 
 const ActionsColumn: FC<IActionsProps> = (props) => {
   return (
-    <div className="flex items-center gap-4 text-xl" onClick={() => props.setSelectedData(props.clickedRowData)}>
+    <div
+      className="flex items-center gap-4 text-xl"
+      onClick={() => props.setSelectedData(props.clickedRowData)}
+    >
       <button title="Edit" onClick={() => props.onStartEdit()}>
         <FaRegEdit className="text-blue-500" />
       </button>
@@ -155,7 +197,11 @@ const ActionsColumn: FC<IActionsProps> = (props) => {
 
 const AddButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button onClick={onClick} className="order-first text-sidebar-foreground text-3xl me-2" title="Add new parking">
+    <button
+      onClick={onClick}
+      className="order-first text-sidebar-foreground text-3xl me-2"
+      title="Add new parking"
+    >
       <IoMdAddCircle />
     </button>
   );

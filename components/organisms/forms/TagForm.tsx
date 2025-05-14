@@ -14,7 +14,11 @@ import {
 import { Button } from "@/components/ui/shadcn/ui/button";
 import { SheetClose, SheetFooter } from "@/components/ui/shadcn/ui/sheet";
 import { MultiSelect } from "@/components/ui/shadcn/wrappers/MultiSelect";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/shadcn/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/shadcn/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/shadcn/ui/calendar";
@@ -22,6 +26,7 @@ import { cn } from "@/components/ui/shadcn/utils";
 import { useEffect } from "react";
 import { addMonths, isValid } from "date-fns";
 import { Checkbox } from "@/components/ui/shadcn/ui/checkbox";
+import { useWeekDaysForSelect } from "@/hooks/selectOptions";
 
 interface Iprops {
   id?: string;
@@ -52,7 +57,12 @@ const TagForm: React.FC<Iprops> = ({ id, onSubmit }) => {
           <>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="tagNumber">Tag Number</Label>
-              <Input {...field} type="text" id="tagNumber" placeholder="Enter tag number" />
+              <Input
+                {...field}
+                type="text"
+                id="tagNumber"
+                placeholder="Enter tag number"
+              />
             </div>
           </>
         )}
@@ -65,7 +75,12 @@ const TagForm: React.FC<Iprops> = ({ id, onSubmit }) => {
           <>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="tagName">Tag Name</Label>
-              <Input {...field} type="text" id="tagName" placeholder="Enter tag name" />
+              <Input
+                {...field}
+                type="text"
+                id="tagName"
+                placeholder="Enter tag name"
+              />
             </div>
           </>
         )}
@@ -126,14 +141,26 @@ const TagForm: React.FC<Iprops> = ({ id, onSubmit }) => {
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !field.value && "text-muted-foreground"
+                  )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                  {field.value ? (
+                    format(field.value, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  initialFocus
+                />
               </PopoverContent>
             </Popover>
           </div>
@@ -174,15 +201,27 @@ const TagForm: React.FC<Iprops> = ({ id, onSubmit }) => {
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !field.value && "text-muted-foreground"
+                  )}
                   disabled
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                  {field.value ? (
+                    format(field.value, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  initialFocus
+                />
               </PopoverContent>
             </Popover>
           </div>
@@ -203,11 +242,7 @@ interface ITypeProps {
 }
 
 const PolicySelector: FC<ITypeProps> = ({ control }) => {
-  const weekdays = [
-    { label: "Policy 1", value: "1" },
-    { label: "Policy 2", value: "2" },
-    { label: "Policy 3", value: "3" },
-  ];
+  const weekdays = useWeekDaysForSelect();
 
   return (
     <div>
@@ -234,7 +269,11 @@ const TagSelector: FC<ITypeProps> = ({ control }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-2">
-        <Checkbox id="hasTag" checked={hasTag} onCheckedChange={(val) => setHasTag(!!val)} />
+        <Checkbox
+          id="hasTag"
+          checked={hasTag}
+          onCheckedChange={(val) => setHasTag(!!val)}
+        />
         <label htmlFor="hasTag" className="text-sm font-medium leading-none">
           Has Tag
         </label>
@@ -247,7 +286,11 @@ const TagSelector: FC<ITypeProps> = ({ control }) => {
             name="tag"
             control={control}
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange} defaultValue="manager">
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}
+                defaultValue="manager"
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Tag" />
                 </SelectTrigger>

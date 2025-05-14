@@ -10,8 +10,8 @@ import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 
 type Option = {
-  label: string;
-  value: string;
+  id: string;
+  name: string;
 };
 
 type MultiSelectProps = {
@@ -44,7 +44,9 @@ export function MultiSelect({
   };
 
   const toggleSelect = (value: string) => {
-    const newSelected = selected.includes(value) ? selected.filter((v) => v !== value) : [...selected, value];
+    const newSelected = selected.includes(value)
+      ? selected.filter((v) => v !== value)
+      : [...selected, value];
     updateSelection(newSelected);
   };
 
@@ -58,7 +60,11 @@ export function MultiSelect({
     <div className={cn("w-full", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" role="combobox" className="w-full justify-between">
+          <Button
+            variant="outline"
+            role="combobox"
+            className="w-full justify-between"
+          >
             {selected.length > 0 ? `${selected.length} selected` : placeholder}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -68,16 +74,21 @@ export function MultiSelect({
           <Command>
             <CommandGroup>
               {options.map((item) => (
-                <CommandItem key={item.value} onSelect={() => toggleSelect(item.value)}>
+                <CommandItem
+                  key={item.id}
+                  onSelect={() => toggleSelect(item.id)}
+                >
                   <div
                     className={cn(
                       "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                      selected.includes(item.value) && "bg-primary text-white"
+                      selected.includes(item.id) && "bg-primary text-white"
                     )}
                   >
-                    {selected.includes(item.value) && <Check className="h-4 w-4" />}
+                    {selected.includes(item.id) && (
+                      <Check className="h-4 w-4" />
+                    )}
                   </div>
-                  {item.label}
+                  {item.name}
                 </CommandItem>
               ))}
             </CommandGroup>

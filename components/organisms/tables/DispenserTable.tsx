@@ -12,8 +12,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/shadcn/ui/alert-dialog";
 import { Button } from "@/components/ui/shadcn/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/shadcn/ui/sheet";
-import dispenserList from "@/public/data/dispenser-list.json";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/shadcn/ui/sheet";
 import { transformRecordsToTable } from "@/utils/transform";
 import { MUIDataTableColumn } from "mui-datatables";
 import { FC, useState } from "react";
@@ -22,14 +26,30 @@ import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import { PiPlugsConnectedBold } from "react-icons/pi";
 import DispenserForm from "../forms/DispenserForm";
+import { useAppSelector } from "@/redux/store";
+import {
+  useDispenserTypeDictionary,
+  useParkingDictionary,
+} from "@/hooks/dictionaries";
 
 const DispenserTable = () => {
-  const [selectedDispenser, setSelectedDispenser] = useState<string[] | null>();
+  const dispenserList = useAppSelector((state) => state.dispensers.data);
+  const parkingDictionary = useParkingDictionary();
+  const dispenserTypesDictionary = useDispenserTypeDictionary();
+
+  const [selectedId, setSelectedId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
-  const columnOrder = transformRecordsToTable(dispenserList, ["id", "name", "ip", "status", "type", "parkingName"]);
+  const columnOrder = transformRecordsToTable(dispenserList, [
+    "id",
+    "name",
+    "dispenserUrl",
+    "status",
+    "dispenserTypeId",
+    "parkingId",
+  ]);
 
   const tableHeaders: MUIDataTableColumn[] = [
     {
@@ -39,7 +59,7 @@ const DispenserTable = () => {
       name: "Name",
     },
     {
-      name: "IP",
+      name: "Dispenser URL",
     },
     {
       name: "Status",
@@ -49,10 +69,16 @@ const DispenserTable = () => {
           return (
             <div
               className={`flex items-center gap-2 px-2 py-1 rounded-full text-xs font-medium w-max ${
-                isOnline ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                isOnline
+                  ? "bg-green-100 text-green-800"
+                  : "bg-red-100 text-red-800"
               }`}
             >
-              <span className={`w-2 h-2 rounded-full ${isOnline ? "bg-green-500" : "bg-red-500"}`} />
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  isOnline ? "bg-green-500" : "bg-red-500"
+                }`}
+              />
               {value}
             </div>
           );
@@ -61,9 +87,19 @@ const DispenserTable = () => {
     },
     {
       name: "Dispenser Type",
+      options: {
+        customBodyRender: (value: string) => {
+          return dispenserTypesDictionary[value] || value;
+        },
+      },
     },
     {
-      name: "ParkingName",
+      name: "Parking",
+      options: {
+        customBodyRender: (value: string) => {
+          return parkingDictionary[value] || value;
+        },
+      },
     },
     {
       name: "Actions",
@@ -75,7 +111,7 @@ const DispenserTable = () => {
           return (
             <ActionsColumn
               clickedRowData={rowData}
-              setSelectedData={(data) => setSelectedDispenser(data)}
+              setSelectedData={(data) => setSelectedId(data[0])}
               onStartEdit={() => setIsEditing(true)}
               onStartDelete={() => setIsDeleting(true)}
               onTestConnection={() => {}}
@@ -94,14 +130,18 @@ const DispenserTable = () => {
 
   return (
     <>
-      <MUIDatatable options={tableOptions} columns={tableHeaders} data={columnOrder} />
+      <MUIDatatable
+        options={tableOptions}
+        columns={tableHeaders}
+        data={columnOrder}
+      />
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
             <SheetTitle>Editing Dispenser</SheetTitle>
 
-            <DispenserForm onSubmit={() => {}} id={"1"} />
+            <DispenserForm id={selectedId} />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -111,7 +151,7 @@ const DispenserTable = () => {
           <SheetHeader>
             <SheetTitle>Adding Dispenser</SheetTitle>
 
-            <DispenserForm onSubmit={() => {}} />
+            <DispenserForm />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -120,7 +160,9 @@ const DispenserTable = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you Sure?</AlertDialogTitle>
-            <AlertDialogDescription>You are deleting this Dispenser</AlertDialogDescription>
+            <AlertDialogDescription>
+              You are deleting this Dispenser
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -144,7 +186,10 @@ interface IActionsProps {
 
 const ActionsColumn: FC<IActionsProps> = (props) => {
   return (
-    <div className="flex items-center gap-4 text-xl" onClick={() => props.setSelectedData(props.clickedRowData)}>
+    <div
+      className="flex items-center gap-4 text-xl"
+      onClick={() => props.setSelectedData(props.clickedRowData)}
+    >
       <button title="Edit" onClick={() => props.onStartEdit()}>
         <FaRegEdit className="text-blue-500" />
       </button>
@@ -162,7 +207,11 @@ const ActionsColumn: FC<IActionsProps> = (props) => {
 
 const AddButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button onClick={onClick} className="order-first text-sidebar-foreground text-3xl me-2" title="Add new parking">
+    <button
+      onClick={onClick}
+      className="order-first text-sidebar-foreground text-3xl me-2"
+      title="Add new parking"
+    >
       <IoMdAddCircle />
     </button>
   );

@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useForm, Controller, Control } from "react-hook-form";
 import { Input } from "@/components/ui/shadcn/ui/input";
 import { Label } from "@/components/ui/shadcn/ui/label";
@@ -14,16 +14,58 @@ import {
 import { Button } from "@/components/ui/shadcn/ui/button";
 import { SheetClose, SheetFooter } from "@/components/ui/shadcn/ui/sheet";
 import { MultiSelect } from "@/components/ui/shadcn/wrappers/MultiSelect";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { createPlan, IPlan, updatePlan } from "@/redux/slices/planSlice";
+import {
+  useFeeCalculatorForSelect,
+  useParkingsForSelect,
+  useParkingTypesForSelect,
+  usePlanTypesForSelect,
+  useVehicleTypesForSelect,
+} from "@/hooks/selectOptions";
 
 interface Iprops {
   id?: string;
-  onSubmit: (data: any) => void;
 }
 
-const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
-  const form = useForm();
+const PlanForm: React.FC<Iprops> = ({ id }) => {
+  const dispatch = useAppDispatch();
+  const plansList = useAppSelector((state) => state.plans.data);
+  const plan = plansList.find((item) => item.id === id);
+
+  const parkingOptions = useParkingsForSelect();
+  const VEHICLE_TYPES = useVehicleTypesForSelect();
+  const PLAN_TYPES = usePlanTypesForSelect();
+  const FEES_CALCULATORS = useFeeCalculatorForSelect();
+  const PARKING_TYPES = useParkingTypesForSelect();
+
+  const form = useForm<IPlan>({
+    defaultValues: plan ?? {
+      id: "",
+      name: "",
+      planTypeId: "",
+      feesCalculatorId: "",
+      rate: "",
+      parkingTypeId: "",
+      parkingId: "",
+      status: "",
+      categoryTypes: [],
+      validity: {
+        from: "",
+        to: "",
+      },
+    },
+  });
 
   const { handleSubmit, control } = form;
+
+  const onSubmit = (data: IPlan) => {
+    if (id) {
+      dispatch(updatePlan(data));
+    } else {
+      dispatch(createPlan(data));
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -34,7 +76,12 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
           <>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="name">Plan Name</Label>
-              <Input {...field} type="text" id="name" placeholder="Enter name" />
+              <Input
+                {...field}
+                type="text"
+                id="name"
+                placeholder="Enter name"
+              />
             </div>
           </>
         )}
@@ -43,7 +90,7 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
       <div>
         <h5 className="mb-2">Type</h5>
         <Controller
-          name="type"
+          name="planTypeId"
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
@@ -52,9 +99,11 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="ticket">ticket</SelectItem>
-                  <SelectItem value="card">card</SelectItem>
-                  <SelectItem value="tag">tag</SelectItem>
+                  {PLAN_TYPES.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -65,7 +114,7 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
       <div>
         <h5 className="mb-2">Fess calculator</h5>
         <Controller
-          name="feeCalculator"
+          name="feesCalculatorId"
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
@@ -74,9 +123,11 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="1">round 1 hour</SelectItem>
-                  <SelectItem value="2">exact</SelectItem>
-                  <SelectItem value="3">supscription</SelectItem>
+                  {FEES_CALCULATORS.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -91,7 +142,12 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
           <>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="rate">Rate</Label>
-              <Input {...field} type="text" id="rate" placeholder="Enter rate" />
+              <Input
+                {...field}
+                type="text"
+                id="rate"
+                placeholder="Enter rate"
+              />
             </div>
           </>
         )}
@@ -100,7 +156,7 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
       <div>
         <h5 className="mb-2">Parking Type</h5>
         <Controller
-          name="parkingtype"
+          name="parkingTypeId"
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
@@ -109,8 +165,11 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="1">Per Hour</SelectItem>
-                  <SelectItem value="2">Per Entry</SelectItem>
+                  {PARKING_TYPES.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -119,19 +178,22 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
       </div>
 
       <div>
-        <h5 className="mb-2">Parking Name</h5>
+        <h5 className="mb-2">Parking</h5>
         <Controller
-          name="parkingName"
+          name="parkingId"
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select parking name" />
+                <SelectValue placeholder="Select parking" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="1">Parking 1</SelectItem>
-                  <SelectItem value="2">Parking 2</SelectItem>
+                  {parkingOptions.map((parking) => (
+                    <SelectItem key={parking.id} value={parking.id}>
+                      {parking.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -139,7 +201,21 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
         />
       </div>
 
-      <CategorySelector control={control} />
+      <div>
+        <h5 className="mb-2">Selected category types</h5>
+        <Controller
+          name="categoryTypes"
+          control={control}
+          render={({ field }) => (
+            <MultiSelect
+              options={VEHICLE_TYPES}
+              selected={field.value}
+              onChange={field.onChange}
+              placeholder="Select category types"
+            />
+          )}
+        />
+      </div>
 
       <SheetFooter>
         <SheetClose>
@@ -147,36 +223,6 @@ const PlanForm: React.FC<Iprops> = ({ id, onSubmit }) => {
         </SheetClose>
       </SheetFooter>
     </form>
-  );
-};
-
-interface ITypeProps {
-  control: Control;
-}
-
-const CategorySelector: FC<ITypeProps> = ({ control }) => {
-  const options = [
-    { label: "Sedan", value: "1" },
-    { label: "Bus", value: "2" },
-    { label: "Van", value: "3" },
-  ];
-
-  return (
-    <div>
-      <h5 className="mb-2">Selected category types</h5>
-      <Controller
-        name="categoryTypes"
-        control={control}
-        render={({ field }) => (
-          <MultiSelect
-            options={options}
-            selected={field.value}
-            onChange={field.onChange}
-            placeholder="Select category types"
-          />
-        )}
-      />
-    </div>
   );
 };
 

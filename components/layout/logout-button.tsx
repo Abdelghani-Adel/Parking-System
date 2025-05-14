@@ -1,14 +1,26 @@
 "use client";
+import axiosInstance from "@/lib/axiosInstance";
 import { deleteCookie, TOKEN_KEY } from "@/utils/auth";
-import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
-export function LogoutButton({ className, children }: { className: string; children: ReactNode }) {
-  const router = useRouter();
+export function LogoutButton({
+  className,
+  children,
+}: {
+  className: string;
+  children: ReactNode;
+}) {
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post("/api/v1/auth/logout");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
 
-  const handleLogout = () => {
+    // Remove the token from cookies
     deleteCookie(TOKEN_KEY);
-    router.replace("/login");
+    // Optionally, redirect the user to the login page or home page
+    window.location.href = "/login";
   };
 
   return (

@@ -12,29 +12,47 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/shadcn/ui/alert-dialog";
 import { Button } from "@/components/ui/shadcn/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/shadcn/ui/sheet";
-import cardList from "@/public/data/subscription-card-list.json";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/shadcn/ui/sheet";
 import { transformRecordsToTable } from "@/utils/transform";
 import { MUIDataTableColumn } from "mui-datatables";
 import { FC, useState } from "react";
-import { FaFileInvoiceDollar, FaRegEdit, FaRegPlayCircle } from "react-icons/fa";
+import {
+  FaFileInvoiceDollar,
+  FaRegEdit,
+  FaRegPlayCircle,
+} from "react-icons/fa";
 import { GiCardExchange } from "react-icons/gi";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
-import SubscriptionCardForm from "../forms/SubscriptionCardForm";
+import PlanCardForm from "../forms/PlanCardForm";
+import {
+  useCardTypesDictionary,
+  usePlanTypesDictionary,
+  usePolicyDictionary,
+} from "@/hooks/dictionaries";
+import { useAppSelector } from "@/redux/store";
+import { formatDate } from "@/utils/date";
 
-const SubscriptionCardTable = () => {
-  const [selectedCard, setSelectedCard] = useState<string[] | null>();
+const PlanCardTable = () => {
+  const cards = useAppSelector((state) => state.planCards.data);
+  const planDictionary = usePlanTypesDictionary();
+  const cardTypeDictionary = useCardTypesDictionary();
+
+  const [selectedId, setSelectedId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
-  const columnOrder = transformRecordsToTable(cardList, [
+  const columnOrder = transformRecordsToTable(cards, [
     "id",
     "cardNumber",
-    "cardType",
-    "plan",
-    "policies",
+    "cardTypeId",
+    "planId",
     "startDate",
     "endDate",
     "tagId",
@@ -49,18 +67,35 @@ const SubscriptionCardTable = () => {
     },
     {
       name: "Card Type",
+      options: {
+        customBodyRender: (value: string) => {
+          return cardTypeDictionary[value] || value;
+        },
+      },
     },
     {
       name: "Plan",
-    },
-    {
-      name: "Policies",
+      options: {
+        customBodyRender: (value: string) => {
+          return planDictionary[value] || value;
+        },
+      },
     },
     {
       name: "Start Date",
+      options: {
+        customBodyRender: (value: string) => {
+          return formatDate(value);
+        },
+      },
     },
     {
       name: "End Date",
+      options: {
+        customBodyRender: (value: string) => {
+          return formatDate(value);
+        },
+      },
     },
     {
       name: "Has Tag",
@@ -80,7 +115,7 @@ const SubscriptionCardTable = () => {
           return (
             <ActionsColumn
               clickedRowData={rowData}
-              setSelectedData={(data) => setSelectedCard(data)}
+              setSelectedData={(data) => setSelectedId(data[0])}
               onStartEdit={() => setIsEditing(true)}
               onStartDelete={() => setIsDeleting(true)}
               onTestConnection={() => {}}
@@ -99,14 +134,18 @@ const SubscriptionCardTable = () => {
 
   return (
     <>
-      <MUIDatatable options={tableOptions} columns={tableHeaders} data={columnOrder} />
+      <MUIDatatable
+        options={tableOptions}
+        columns={tableHeaders}
+        data={columnOrder}
+      />
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
-            <SheetTitle>Editing Card</SheetTitle>
+            <SheetTitle className="text-2xl">Edit Card</SheetTitle>
 
-            <SubscriptionCardForm onSubmit={() => {}} id={"1"} />
+            <PlanCardForm id={selectedId} />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -114,9 +153,9 @@ const SubscriptionCardTable = () => {
       <Sheet open={isAdding} onOpenChange={setIsAdding}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
-            <SheetTitle>Adding Card</SheetTitle>
+            <SheetTitle className="text-2xl">Adding Card</SheetTitle>
 
-            <SubscriptionCardForm onSubmit={() => {}} />
+            <PlanCardForm />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -125,7 +164,9 @@ const SubscriptionCardTable = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you Sure?</AlertDialogTitle>
-            <AlertDialogDescription>You are deleting this Card</AlertDialogDescription>
+            <AlertDialogDescription>
+              You are deleting this Card
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -149,7 +190,10 @@ interface IActionsProps {
 
 const ActionsColumn: FC<IActionsProps> = (props) => {
   return (
-    <div className="flex items-center gap-4 text-xl" onClick={() => props.setSelectedData(props.clickedRowData)}>
+    <div
+      className="flex items-center gap-4 text-xl"
+      onClick={() => props.setSelectedData(props.clickedRowData)}
+    >
       <button title="Edit" onClick={() => props.onStartEdit()}>
         <FaRegEdit className="text-blue-500" />
       </button>
@@ -175,10 +219,14 @@ const ActionsColumn: FC<IActionsProps> = (props) => {
 
 const AddButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button onClick={onClick} className="order-first text-sidebar-foreground text-3xl me-2" title="Add new parking">
+    <button
+      onClick={onClick}
+      className="order-first text-sidebar-foreground text-3xl me-2"
+      title="Add new parking"
+    >
       <IoMdAddCircle />
     </button>
   );
 };
 
-export default SubscriptionCardTable;
+export default PlanCardTable;

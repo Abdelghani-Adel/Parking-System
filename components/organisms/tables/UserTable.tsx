@@ -12,7 +12,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/shadcn/ui/alert-dialog";
 import { Button } from "@/components/ui/shadcn/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/shadcn/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/shadcn/ui/sheet";
 import { transformRecordsToTable } from "@/utils/transform";
 import { MUIDataTableColumn } from "mui-datatables";
 import { FC, useState } from "react";
@@ -20,18 +25,28 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import { TbCancel } from "react-icons/tb";
-import { PiPlugsConnectedBold } from "react-icons/pi";
-import userList from "@/public/data/user-list.json";
 import UserForm from "../forms/UserForm";
+import { useAppSelector } from "@/redux/store";
+import { useRolesForSelect } from "@/hooks/selectOptions";
+import { useRoleDictionary } from "@/hooks/dictionaries";
 
 const UserTable = () => {
-  const [selectedDispenser, setSelectedUser] = useState<string[] | null>();
+  const userList = useAppSelector((state) => state.users.data);
+  const roles = useRoleDictionary();
+
+  const [selectedId, setSelectedId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isSuspending, setIsSuspending] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
-  const columnOrder = transformRecordsToTable(userList, ["id", "name", "role", "email", "phone"]);
+  const columnOrder = transformRecordsToTable(userList, [
+    "id",
+    "name",
+    "roleId",
+    "email",
+    "phone",
+  ]);
 
   const tableHeaders: MUIDataTableColumn[] = [
     {
@@ -41,13 +56,18 @@ const UserTable = () => {
       name: "Name",
     },
     {
-      name: "ip",
+      name: "Role",
+      options: {
+        customBodyRender: (value: string) => {
+          return roles[value] || value;
+        },
+      },
     },
     {
-      name: "status",
+      name: "Email",
     },
     {
-      name: "parkingName",
+      name: "Phone",
     },
     {
       name: "Actions",
@@ -59,7 +79,7 @@ const UserTable = () => {
           return (
             <ActionsColumn
               clickedRowData={rowData}
-              setSelectedData={(data) => setSelectedUser(data)}
+              setSelectedData={(data) => setSelectedId(data[0])}
               onStartEdit={() => setIsEditing(true)}
               onStartSuspend={() => setIsSuspending(true)}
               onStartDelete={() => setIsDeleting(true)}
@@ -78,14 +98,18 @@ const UserTable = () => {
 
   return (
     <>
-      <MUIDatatable options={tableOptions} columns={tableHeaders} data={columnOrder} />
+      <MUIDatatable
+        options={tableOptions}
+        columns={tableHeaders}
+        data={columnOrder}
+      />
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
             <SheetTitle>Editing User</SheetTitle>
 
-            <UserForm onSubmit={() => {}} id={"1"} />
+            <UserForm id={selectedId} />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -95,7 +119,7 @@ const UserTable = () => {
           <SheetHeader>
             <SheetTitle>Adding User</SheetTitle>
 
-            <UserForm onSubmit={() => {}} />
+            <UserForm />
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -104,7 +128,9 @@ const UserTable = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you Sure?</AlertDialogTitle>
-            <AlertDialogDescription>You are suspending this User</AlertDialogDescription>
+            <AlertDialogDescription>
+              You are suspending this User
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -117,7 +143,9 @@ const UserTable = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you Sure?</AlertDialogTitle>
-            <AlertDialogDescription>You are deleting this User</AlertDialogDescription>
+            <AlertDialogDescription>
+              You are deleting this User
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -141,7 +169,10 @@ interface IActionsProps {
 
 const ActionsColumn: FC<IActionsProps> = (props) => {
   return (
-    <div className="flex items-center gap-4 text-xl" onClick={() => props.setSelectedData(props.clickedRowData)}>
+    <div
+      className="flex items-center gap-4 text-xl"
+      onClick={() => props.setSelectedData(props.clickedRowData)}
+    >
       <button title="Edit" onClick={() => props.onStartEdit()}>
         <FaRegEdit className="text-blue-500" />
       </button>
@@ -159,7 +190,11 @@ const ActionsColumn: FC<IActionsProps> = (props) => {
 
 const AddButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button onClick={onClick} className="order-first text-sidebar-foreground text-3xl me-2" title="Add new parking">
+    <button
+      onClick={onClick}
+      className="order-first text-sidebar-foreground text-3xl me-2"
+      title="Add new parking"
+    >
       <IoMdAddCircle />
     </button>
   );
