@@ -1,17 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
-import tokens from "@/public/data/tokens.json";
-import { useRouter } from "next/navigation";
-import { LuGalleryVerticalEnd } from "react-icons/lu";
-import { Label } from "@/components/ui/shadcn/ui/label";
-import { Input } from "@/components/ui/shadcn/ui/input";
 import { Button } from "@/components/ui/shadcn/ui/button";
+import { Input } from "@/components/ui/shadcn/ui/input";
+import { Label } from "@/components/ui/shadcn/ui/label";
 import { cn } from "@/components/ui/shadcn/utils";
-import axiosInstance from "@/lib/axiosInstance";
+import { useAppDispatch } from "@/redux/store";
+import { loginUser } from "@/utils/auth";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Login = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -26,22 +25,12 @@ const Login = () => {
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-
-    try {
-      const response = await axiosInstance.post("/api/v1/auth/login", {
-        email: username,
-        password: password,
-      });
-
-      if (response.data.success) {
-        document.cookie =
-          "quantumParkingToken=" + response.data.data.accessToken;
-        router.push("/");
-      } else {
-        console.error(response.data.message);
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
+    const result = await loginUser({
+      email: username,
+      password: password,
+    });
+    if (result?.accessToken) {
+      router.push("/");
     }
   };
 

@@ -1,7 +1,6 @@
 import { useAppSelector } from "@/redux/store";
 import {
   CARD_TYPES,
-  CURRENCIES,
   DISPENSER_TYPES,
   FEES_CALCULATOR,
   PARKING_TYPES,
@@ -20,6 +19,17 @@ export function useParkingsForSelect() {
   }));
 
   return parkingOptions;
+}
+
+export function useCurrenciesForSelect() {
+  const currencies = useAppSelector((state) => state.currencies.data);
+
+  const currenciesOptions = currencies.map((currency) => ({
+    id: currency.id,
+    name: currency.code,
+  }));
+
+  return currenciesOptions;
 }
 
 export function usePoliciesForSelect() {
@@ -63,8 +73,4 @@ export function useCardTypesForSelect() {
 
 export function useRolesForSelect() {
   return ROLES;
-}
-
-export function useCurrenciesForSelect() {
-  return CURRENCIES;
 }

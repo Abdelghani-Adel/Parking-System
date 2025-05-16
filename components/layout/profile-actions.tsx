@@ -12,9 +12,11 @@ import { BsFillStopFill } from "react-icons/bs";
 import { LogoutButton } from "./logout-button";
 import { LuLogOut } from "react-icons/lu";
 import axiosInstance from "@/lib/axiosInstance";
+import { getUserFromCookies } from "@/utils/auth";
 
 const ProfileActions = () => {
   const { t } = useLanguage();
+  const user = getUserFromCookies();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -33,7 +35,7 @@ const ProfileActions = () => {
         className="flex items-center gap-2  hover:text-primary px-3 py-2 rounded-full"
       >
         <GoPerson className="text-3xl" />
-        <span>Ahmed Mohamed</span>
+        <span>{user?.user.username}</span>
         <FaChevronDown className="text-xs" />
       </button>
 
@@ -44,7 +46,7 @@ const ProfileActions = () => {
         PopoverClasses={{ paper: "w-72" }}
       >
         <MenuItem>
-          <Link href="#" className="flex items-center gap-2">
+          <Link href="/profile" className="flex items-center gap-2">
             <IoSettingsOutline className="text-lg" />
             Account Settings
           </Link>

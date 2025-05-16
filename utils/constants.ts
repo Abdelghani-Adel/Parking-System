@@ -1,6 +1,8 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const isDev = process.env.NODE_ENV === "development";
 export const isProd = process.env.NODE_ENV === "production";
+export const TOKEN_KEY = "rdq_token";
+export const USER_KEY = "rdq_user";
 
 export const DATE_FORMAT_PATTERN = "dd-MM-yyyy";
 
@@ -37,10 +39,10 @@ export const ROLES = [
   { id: "4", name: "Operator" },
 ];
 
-export const CURRENCIES = [
-  { id: "1", name: "EGP" },
-  { id: "2", name: "USD" },
-];
+// export const CURRENCIES = [
+//   { id: "1", name: "EGP" },
+//   { id: "2", name: "USD" },
+// ];
 
 export const PARKING_TYPES = [
   { id: "1", name: "Per Hour" },

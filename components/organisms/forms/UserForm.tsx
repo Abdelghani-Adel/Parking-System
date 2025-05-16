@@ -13,8 +13,9 @@ import { Input } from "@/components/ui/shadcn/ui/input";
 import { SheetClose, SheetFooter } from "@/components/ui/shadcn/ui/sheet";
 import { Button } from "@/components/ui/shadcn/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { createUser, IUser, updateUser } from "@/redux/slices/userSlice";
+import { createUser, updateUser } from "@/redux/slices/userSlice";
 import { useRolesForSelect } from "@/hooks/selectOptions";
+import { IUser } from "@/services/UserAPI";
 
 interface IProps {
   id?: string;
@@ -29,9 +30,9 @@ const FormUser: React.FC<IProps> = ({ id }) => {
   const form = useForm<IUser>({
     defaultValues: user ?? {
       id: "",
-      name: "",
+      username: "",
       email: "",
-      phone: "",
+      phoneNumber: "",
       roleId: "",
     },
   });
@@ -49,7 +50,7 @@ const FormUser: React.FC<IProps> = ({ id }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <Controller
-        name="name"
+        name="username"
         control={control}
         rules={{ required: "Email is required" }}
         render={({ field }) => (
@@ -85,7 +86,7 @@ const FormUser: React.FC<IProps> = ({ id }) => {
 
       {/* Phone Field */}
       <Controller
-        name="phone"
+        name="phoneNumber"
         control={control}
         render={({ field }) => (
           <div className="grid w-full items-center gap-1.5">

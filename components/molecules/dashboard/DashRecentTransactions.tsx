@@ -35,37 +35,37 @@ const transactions = [
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN006",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN007",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN008",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN009",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN0010",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN0011",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
@@ -91,8 +91,12 @@ const DashRecentTransactions = () => {
           <thead className="bg-grey-light dark:bg-grey">
             <tr>
               <th className="px-6 py-2 text-start text-gray-600 text-sm">ID</th>
-              <th className="px-6 py-2 text-start text-gray-600 text-sm">Check-In</th>
-              <th className="px-6 py-2 text-start text-gray-600 text-sm">Payment</th>
+              <th className="px-6 py-2 text-start text-gray-600 text-sm">
+                Check-In
+              </th>
+              <th className="px-6 py-2 text-start text-gray-600 text-sm">
+                Payment
+              </th>
             </tr>
           </thead>
           <tbody className="text-sm">

@@ -8,6 +8,7 @@ import { fetchPolicies } from "@/redux/slices/policySlice";
 import { fetchUsers } from "@/redux/slices/userSlice";
 import { fetchPlanCards } from "@/redux/slices/planCardSlice";
 import { fetchManagerCards } from "@/redux/slices/managerCardSlice";
+import { fetchCurrencies } from "@/redux/slices/currencySlice";
 
 export function useAppSetup() {
   const dispatch = useAppDispatch();
@@ -22,6 +23,8 @@ export function useAppSetup() {
 
 async function initializeAppData(dispatch: any) {
   dispatch(fetchParkings());
+  dispatch(fetchCurrencies());
+
   dispatch(fetchDispensers());
   dispatch(fetchPlans());
   dispatch(fetchPolicies());

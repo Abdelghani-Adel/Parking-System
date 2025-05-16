@@ -1,29 +1,7 @@
 // features/parkings/parkingSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "@/lib/axiosInstance";
-
-// === Types ===
-
-export interface IParking {
-  id: string;
-  name: string;
-  currency: string;
-  vat: string;
-  lost_ticket_fees: string;
-  lost_card_fees: string;
-  capacity: string;
-  entry_grace_period: string;
-  exit_grace_period: string;
-  card_grace_period: string;
-  tag_grace_period: string;
-  address: string;
-  is_active: boolean;
-  working_days: string[];
-  workingHours: {
-    from: string;
-    to: string;
-  };
-}
+import ParkingApi, { IParking } from "@/services/ParkingApi";
 
 interface ParkingsState {
   data: IParking[];
@@ -73,33 +51,30 @@ const parkingSlice = createSlice({
 // === Thunks ===
 
 export const fetchParkings = createAsyncThunk("parkings/fetch", async () => {
-  const res = await axiosInstance.get<IParking[]>("/api/parkings");
-  return res.data;
+  const result = await ParkingApi.getAll();
+  return result;
 });
 
 export const createParking = createAsyncThunk(
   "parkings/create",
   async (newParking: IParking) => {
-    const res = await axiosInstance.post<IParking>("/api/parkings", newParking);
-    return res.data;
+    const result = await ParkingApi.create(newParking);
+    return result;
   }
 );
 
 export const updateParking = createAsyncThunk(
   "parkings/update",
   async (parking: IParking) => {
-    const res = await axiosInstance.put<IParking>(
-      `/api/parkings/${parking.id}`,
-      parking
-    );
-    return res.data;
+    const result = await ParkingApi.update(parking);
+    return result;
   }
 );
 
 export const deleteParking = createAsyncThunk(
   "parkings/delete",
   async (id: string) => {
-    await axiosInstance.delete(`/api/parkings/${id}`);
+    await ParkingApi.delete(id);
     return id;
   }
 );

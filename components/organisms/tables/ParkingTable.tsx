@@ -40,12 +40,12 @@ const ParkingTable = () => {
   const columnOrder = transformRecordsToTable(parkings, [
     "id",
     "name",
-    "currency",
-    "vat",
-    "is_active",
-    "lost_ticket_fees",
-    "lost_card_fees",
-    "capacity",
+    "currencyId",
+    "vatPercentage",
+    "isActive",
+    "lostTicketFee",
+    "lostCardFee",
+    "totalCapacity",
     "address",
   ]);
 

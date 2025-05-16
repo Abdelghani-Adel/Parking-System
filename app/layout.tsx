@@ -6,6 +6,8 @@ import { ReactNode } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Provider } from "react-redux";
 import "./globals.css";
+import { useAppSetup } from "@/hooks/useAppSetup";
+import SetupProvider from "@/components/layout/SetupProvider";
 
 // export const metadata: Metadata = {
 //   title: "Quantum Parking",
@@ -17,10 +19,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html>
       <body className="font-sans bg-gray-50 dark:bg-black">
         <Provider store={store}>
-          <LanguageProvider>
-            {children}
-            <div id="modalContainer" />
-          </LanguageProvider>
+          <SetupProvider>
+            <LanguageProvider>
+              {children}
+              <div id="modalContainer" />
+            </LanguageProvider>
+          </SetupProvider>
         </Provider>
       </body>
     </html>

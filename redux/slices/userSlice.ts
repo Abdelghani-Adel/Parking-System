@@ -1,15 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "@/lib/axiosInstance";
-
-// === Types ===
-
-export interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  roleId: string;
-  phone: string;
-}
+import { IUser, UserApi } from "@/services/UserAPI";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface UsersState {
   data: IUser[];
@@ -26,30 +17,30 @@ const initialState: UsersState = {
 // === Thunks ===
 
 export const fetchUsers = createAsyncThunk("users/fetch", async () => {
-  const res = await axiosInstance.get<IUser[]>("/api/users");
-  return res.data;
+  const result = await UserApi.getAll();
+  return result;
 });
 
 export const createUser = createAsyncThunk(
   "users/create",
   async (newUser: IUser) => {
-    const res = await axiosInstance.post<IUser>("/api/users", newUser);
-    return res.data;
+    const result = await UserApi.create(newUser);
+    return result;
   }
 );
 
 export const updateUser = createAsyncThunk(
   "users/update",
   async (user: IUser) => {
-    const res = await axiosInstance.put<IUser>(`/api/users/${user.id}`, user);
-    return res.data;
+    const result = await UserApi.update(user);
+    return result;
   }
 );
 
 export const deleteUser = createAsyncThunk(
   "users/delete",
   async (id: string) => {
-    await axiosInstance.delete(`/api/users/${id}`);
+    await UserApi.delete(`/api/users/${id}`);
     return id;
   }
 );

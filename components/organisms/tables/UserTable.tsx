@@ -42,10 +42,10 @@ const UserTable = () => {
 
   const columnOrder = transformRecordsToTable(userList, [
     "id",
-    "name",
+    "username",
     "roleId",
     "email",
-    "phone",
+    "phoneNumber",
   ]);
 
   const tableHeaders: MUIDataTableColumn[] = [

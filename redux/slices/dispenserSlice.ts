@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "@/lib/axiosInstance";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export type IDispenser = {
   id: string;

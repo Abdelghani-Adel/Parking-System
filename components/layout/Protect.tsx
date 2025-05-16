@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { decodeToken, getAuthToken } from "@/utils/auth";
+import { getUserFromCookies } from "@/utils/auth";
 
 interface ProtectedProps {
   children: ReactNode;
@@ -9,15 +9,15 @@ interface ProtectedProps {
 }
 
 export default function Protect({ children, roles }: ProtectedProps) {
-  const token = getAuthToken();
+  const user = getUserFromCookies();
 
-  if (!token) return null;
+  if (!user) return null;
 
-  const decoded = decodeToken(token);
+  // const decoded = decodeToken(token);
 
-  if (!decoded || !roles.includes(decoded.role)) {
-    return null;
-  }
+  // if (!decoded || !roles.includes(decoded.role)) {
+  //   return null;
+  // }
 
   return <>{children}</>;
 }

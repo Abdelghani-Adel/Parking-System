@@ -1,7 +1,6 @@
 import { useAppSelector } from "@/redux/store";
 import {
   CARD_TYPES,
-  CURRENCIES,
   DISPENSER_TYPES,
   FEES_CALCULATOR,
   PARKING_TYPES,
@@ -21,6 +20,19 @@ export function useParkingDictionary() {
   );
 
   return parkingMap;
+}
+
+export function useCurrencyDictionary() {
+  const currencies = useAppSelector((state) => state.currencies.data);
+  const currencyMap: Record<string, string> = currencies.reduce(
+    (acc: Record<string, string>, currency) => {
+      acc[currency.id] = currency.code;
+      return acc;
+    },
+    {} as Record<string, string>
+  );
+
+  return currencyMap;
 }
 
 export function usePolicyDictionary() {
@@ -66,13 +78,6 @@ export function useParkingTypesDictionary() {
 
 export function useRoleDictionary() {
   return ROLES.reduce((map, obj) => {
-    map[obj.id] = obj.name;
-    return map;
-  }, {} as Record<string, string>);
-}
-
-export function useCurrencyDictionary() {
-  return CURRENCIES.reduce((map, obj) => {
     map[obj.id] = obj.name;
     return map;
   }, {} as Record<string, string>);

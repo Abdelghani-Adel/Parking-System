@@ -19,12 +19,9 @@ import {
   useCurrenciesForSelect,
   useWeekDaysForSelect,
 } from "@/hooks/selectOptions";
-import {
-  createParking,
-  IParking,
-  updateParking,
-} from "@/redux/slices/parkingSlice";
+import { createParking, updateParking } from "@/redux/slices/parkingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { IParking } from "@/services/ParkingApi";
 import React, { FC } from "react";
 import { Control, Controller, useForm } from "react-hook-form";
 
@@ -43,18 +40,19 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
     defaultValues: parking ?? {
       id: "",
       name: "",
-      currency: "1",
-      vat: "",
-      lost_ticket_fees: "",
-      lost_card_fees: "",
-      capacity: "",
-      entry_grace_period: "",
-      exit_grace_period: "",
-      card_grace_period: "",
-      tag_grace_period: "",
+      currencyId: "1",
+      vatPercentage: "",
+      lostTicketFee: "",
+      lostCardFee: "",
+      lostTagFee: "",
+      totalCapacity: "",
+      entryGracePeriod: "",
+      exitGracePeriod: "",
+      cardGracePeriod: "",
+      tagGracePeriod: "",
       address: "",
-      is_active: false,
-      working_days: [],
+      isActive: false,
+      workingDays: [],
       workingHours: {
         from: "",
         to: "",
@@ -81,7 +79,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <Controller
-        name="is_active"
+        name="isActive"
         control={control}
         render={({ field }) => (
           <>
@@ -130,7 +128,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
       <div>
         <h5 className="mb-2">currency</h5>
         <Controller
-          name="currency"
+          name="currencyId"
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
@@ -151,7 +149,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
         />
       </div>
       <Controller
-        name="capacity"
+        name="totalCapacity"
         control={control}
         render={({ field }) => (
           <div className="grid w-full items-center gap-1.5">
@@ -213,7 +211,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
 
       <div className="grid grid-cols-3 gap-2">
         <Controller
-          name="vat"
+          name="vatPercentage"
           control={control}
           render={({ field }) => (
             <div className="grid w-full items-center gap-1.5">
@@ -223,7 +221,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
           )}
         />
         <Controller
-          name="lost_ticket_fees"
+          name="lostTicketFee"
           control={control}
           render={({ field }) => (
             <div className="grid w-full items-center gap-1.5">
@@ -238,7 +236,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
           )}
         />
         <Controller
-          name="lost_card_fees"
+          name="lostCardFee"
           control={control}
           render={({ field }) => (
             <div className="grid w-full items-center gap-1.5">
@@ -259,7 +257,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
 
       <div className="grid grid-cols-2 gap-4">
         <Controller
-          name="entry_grace_period"
+          name="entryGracePeriod"
           control={control}
           render={({ field }) => (
             <div className="grid w-full items-center gap-1.5">
@@ -274,7 +272,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
           )}
         />
         <Controller
-          name="exit_grace_period"
+          name="exitGracePeriod"
           control={control}
           render={({ field }) => (
             <div className="grid w-full items-center gap-1.5">
@@ -289,7 +287,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
           )}
         />
         <Controller
-          name="card_grace_period"
+          name="cardGracePeriod"
           control={control}
           render={({ field }) => (
             <div className="grid w-full items-center gap-1.5">
@@ -304,7 +302,7 @@ const ParkingForm: React.FC<IProps> = ({ id, onClose }) => {
           )}
         />
         <Controller
-          name="tag_grace_period"
+          name="tagGracePeriod"
           control={control}
           render={({ field }) => (
             <div className="grid w-full items-center gap-1.5">
@@ -339,7 +337,7 @@ const WeekDaysFields: FC<IWeekDaysProps> = ({ control }) => {
     <div>
       <h5 className="mb-2">Selected Week Days</h5>
       <Controller
-        name="working_days"
+        name="workingDays"
         control={control}
         render={({ field }) => (
           <MultiSelect

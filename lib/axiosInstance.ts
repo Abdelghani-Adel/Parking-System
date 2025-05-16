@@ -1,4 +1,4 @@
-import { getAuthToken } from "@/utils/auth";
+import { getUserFromCookies } from "@/utils/auth";
 import { BASE_URL } from "@/utils/constants";
 import axios from "axios";
 
@@ -16,10 +16,10 @@ axiosInstance.interceptors.request.use(
     config.headers = config.headers || {};
 
     // Add Authorization header
-    let token = getAuthToken();
+    let user = getUserFromCookies();
 
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+    if (user) {
+      config.headers["Authorization"] = `Bearer ${user.accessToken}`;
     }
 
     // Check if the request is for multipart/form-data

@@ -1,4 +1,6 @@
-export const TOKEN_KEY = "quantumParkingToken";
+import { AuthApi, ILoggedInUser, LoginRequest } from "@/services/AuthApi";
+import { BrowserStorage } from "./browserStorage";
+import { TOKEN_KEY, USER_KEY } from "./constants";
 
 export const roles = {
   superAdmin: "superAdmin",
@@ -12,57 +14,38 @@ export const protectedRoutes: Record<string, string[]> = {
   "/users": [roles.superAdmin, roles.admin],
 };
 
-// ✅ Save Cookie
-export function setCookie(name: string, value: string) {
-  if (typeof window !== "undefined") {
-    document.cookie = `${name}=${value}; path=/; secure; HttpOnly`;
-  }
-}
-
-// ✅ Get Cookie
-export function getCookie(name: string): string | undefined | null {
-  if (typeof window === "undefined") return null;
-
-  const cookieMatch = document.cookie.split("; ").find((row) => row.startsWith(`${name}=`));
-  return cookieMatch ? cookieMatch.split("=")[1] : null;
-}
-
-// ✅ Delete Cookie
-export function deleteCookie(name: string) {
-  if (typeof window !== "undefined") {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-  }
-}
-
-// ✅ Get Token
-export function getAuthToken(): string | undefined | null {
-  if (typeof window === "undefined") {
-    // Dynamically import next/headers only on the server
-    const { cookies } = require("next/headers");
-    return cookies().get(TOKEN_KEY)?.value;
+export async function loginUser(loginRequest: LoginRequest) {
+  const result = await AuthApi.login(loginRequest);
+  if (result) {
+    const cookie = JSON.stringify(result.data);
+    BrowserStorage.setCookie(USER_KEY, cookie);
+    return result.data;
   } else {
-    // Client-side: Access cookies from document.cookie
-    return getCookie(TOKEN_KEY);
+    return null;
   }
 }
 
-// ✅ Decode token
-export function decodeToken(token: string): Record<string, any> | null {
-  try {
-    const base64Url = token.split(".")[1]; // Get payload part
-    if (!base64Url) return null;
-
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
-    );
-
-    return JSON.parse(jsonPayload);
-  } catch (error) {
-    console.error("Invalid token:", error);
-    return null;
+export function getUserFromCookies(): ILoggedInUser | null {
+  if (typeof window === "undefined") {
+    // Server-side
+    try {
+      const { cookies } = require("next/headers");
+      const userCookie = cookies().get(USER_KEY);
+      if (!userCookie?.value) return null;
+      return JSON.parse(userCookie.value);
+    } catch (error) {
+      console.error("Error parsing user from server cookies:", error);
+      return null;
+    }
+  } else {
+    // Client-side
+    try {
+      const userCookie = BrowserStorage.getCookie(USER_KEY);
+      if (!userCookie) return null;
+      return JSON.parse(userCookie);
+    } catch (error) {
+      console.error("Error parsing user from client cookies:", error);
+      return null;
+    }
   }
 }

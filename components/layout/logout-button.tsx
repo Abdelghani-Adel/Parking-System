@@ -1,6 +1,6 @@
 "use client";
-import axiosInstance from "@/lib/axiosInstance";
-import { deleteCookie, TOKEN_KEY } from "@/utils/auth";
+import { logoutUser } from "@/redux/slices/profileSlice";
+import { useAppDispatch } from "@/redux/store";
 import { ReactNode } from "react";
 
 export function LogoutButton({
@@ -10,15 +10,9 @@ export function LogoutButton({
   className: string;
   children: ReactNode;
 }) {
+  const dispatch = useAppDispatch();
   const handleLogout = async () => {
-    try {
-      await axiosInstance.post("/api/v1/auth/logout");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-
-    // Remove the token from cookies
-    deleteCookie(TOKEN_KEY);
+    await dispatch(logoutUser());
     // Optionally, redirect the user to the login page or home page
     window.location.href = "/login";
   };

@@ -35,25 +35,25 @@ const transactions = [
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN006",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN007",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN008",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
   },
   {
-    id: "TXN005",
+    id: "TXN009",
     payment: "$25.00 (Card)",
     time: "1:30 PM",
     status: "Success",
@@ -79,8 +79,12 @@ const DashPendingTickets = () => {
           <thead className="bg-gray-100">
             <tr>
               <th className="px-6 py-2 text-start text-gray-600 text-sm">ID</th>
-              <th className="px-6 py-2 text-start text-gray-600 text-sm">Check-In</th>
-              <th className="px-6 py-2 text-start text-gray-600 text-sm">Action</th>
+              <th className="px-6 py-2 text-start text-gray-600 text-sm">
+                Check-In
+              </th>
+              <th className="px-6 py-2 text-start text-gray-600 text-sm">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody className="text-sm">
@@ -89,7 +93,9 @@ const DashPendingTickets = () => {
                 <td className="px-6 py-2">{txn.id}</td>
                 <td className="px-6 py-2">{txn.time}</td>
                 <td className="px-6 py-2">
-                  <button className="underline underline-offset-2 text-accent">Calculate</button>
+                  <button className="underline underline-offset-2 text-accent">
+                    Calculate
+                  </button>
                 </td>
               </tr>
             ))}
