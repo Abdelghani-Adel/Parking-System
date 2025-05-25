@@ -61,7 +61,7 @@ export class ParkingApi {
   static async getAll(): Promise<IParking[]> {
     try {
       const response = await axiosInstance.get<GetAllParkingsReponse>(
-        "/parkings"
+        "/parking"
       );
       return response.data.data.data;
     } catch (error) {
@@ -73,7 +73,7 @@ export class ParkingApi {
   static async getById(id: string): Promise<IParking> {
     try {
       const response = await axiosInstance.get<GetParkingByIdReponse>(
-        `/parkings/${id}`
+        `/parking/${id}`
       );
       return response.data.data;
     } catch (error) {
@@ -84,7 +84,7 @@ export class ParkingApi {
   static async create(parking: IParking): Promise<IParking> {
     try {
       const response = await axiosInstance.post<CreateParkingResponse>(
-        "/parkings",
+        "/parking",
         parking
       );
       return response.data.data;
@@ -96,7 +96,7 @@ export class ParkingApi {
   static async update(parking: IParking): Promise<IParking> {
     try {
       const response = await axiosInstance.put<UpdateParkingResponse>(
-        `/parkings/${parking.id}`,
+        `/parking/${parking.id}`,
         parking
       );
       return response.data.data;
@@ -107,7 +107,7 @@ export class ParkingApi {
 
   static async delete(id: string): Promise<void> {
     try {
-      await axiosInstance.delete<DeleteParkingResponse>(`/parkings/${id}`);
+      await axiosInstance.delete<DeleteParkingResponse>(`/parking/${id}`);
     } catch (error) {
       console.log(error);
     }

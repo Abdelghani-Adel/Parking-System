@@ -76,7 +76,7 @@ let mockParkings: IParking[] = [
 
 export const parkingHandlers = [
   // Catch get all parkings request
-  http.get(`${BASE_URL}/parkings`, () => {
+  http.get(`${BASE_URL}/parking`, () => {
     const response: GetAllParkingsReponse = {
       success: true,
       message: "Parkings retrieved successfully",
@@ -91,7 +91,7 @@ export const parkingHandlers = [
   }),
 
   // Catch create parking request
-  http.post(`${BASE_URL}/parkings`, async ({ request }) => {
+  http.post(`${BASE_URL}/parking`, async ({ request }) => {
     const newParking = (await request.json()) as IParking;
     const created = { ...newParking, id: Math.random().toString().slice(2, 6) };
     mockParkings.push(created);
@@ -106,7 +106,7 @@ export const parkingHandlers = [
   }),
 
   // Catch update parking request
-  http.put(`${BASE_URL}/parkings/:id`, async ({ request, params }) => {
+  http.put(`${BASE_URL}/parking/:id`, async ({ request, params }) => {
     const id = params.id as string;
     const updated = (await request.json()) as IParking;
     mockParkings = mockParkings.map((p) => (p.id === id ? updated : p));
@@ -121,7 +121,7 @@ export const parkingHandlers = [
   }),
 
   // Catch delete parking request
-  http.delete(`${BASE_URL}/parkings/:id`, ({ params }) => {
+  http.delete(`${BASE_URL}/parking/:id`, ({ params }) => {
     const id = params.id as string;
     mockParkings = mockParkings.filter((p) => p.id !== id);
 

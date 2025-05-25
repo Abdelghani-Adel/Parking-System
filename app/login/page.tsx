@@ -4,13 +4,11 @@ import { Button } from "@/components/ui/shadcn/ui/button";
 import { Input } from "@/components/ui/shadcn/ui/input";
 import { Label } from "@/components/ui/shadcn/ui/label";
 import { cn } from "@/components/ui/shadcn/utils";
-import { useAppDispatch } from "@/redux/store";
 import { loginUser } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Login = () => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

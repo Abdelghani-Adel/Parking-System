@@ -130,7 +130,6 @@ const ParkingTable = () => {
         <SheetContent className="w-96 overflow-auto">
           <SheetHeader>
             <SheetTitle className="text-2xl">Adding Parking</SheetTitle>
-
             <ParkingForm onClose={() => setIsAdding(false)} />
           </SheetHeader>
         </SheetContent>

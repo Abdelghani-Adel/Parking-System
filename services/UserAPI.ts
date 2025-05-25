@@ -58,7 +58,7 @@ export interface DeleteUserResponse {
 export class UserApi {
   static async getAll(): Promise<IUser[]> {
     try {
-      const response = await axiosInstance.get<GetAllUsersResponse>("/users");
+      const response = await axiosInstance.get<GetAllUsersResponse>("/user");
       return response.data.data.items;
     } catch (error) {
       return [];

@@ -26,7 +26,7 @@ let mockUsers: IUser[] = [
 ];
 
 export const userHandlers = [
-  http.get(`${BASE_URL}/users`, () => {
+  http.get(`${BASE_URL}/user`, () => {
     const response: GetAllUsersResponse = {
       success: true,
       message: "Parkings retrieved successfully",
@@ -39,7 +39,7 @@ export const userHandlers = [
     return HttpResponse.json(response);
   }),
 
-  http.post(`${BASE_URL}/users`, async ({ request }) => {
+  http.post(`${BASE_URL}/user`, async ({ request }) => {
     const newUser = (await request.json()) as IUser;
     const created = { ...newUser, id: Math.random().toString().slice(2, 6) };
     mockUsers.push(created);
@@ -53,7 +53,7 @@ export const userHandlers = [
     return HttpResponse.json(response, { status: 201 });
   }),
 
-  http.put(`${BASE_URL}/users/:id`, async ({ request, params }) => {
+  http.put(`${BASE_URL}/user/:id`, async ({ request, params }) => {
     const id = params.id as string;
     const updated = (await request.json()) as IUser;
     mockUsers = mockUsers.map((u) => (u.id === id ? updated : u));
@@ -67,7 +67,7 @@ export const userHandlers = [
     return HttpResponse.json(reponse);
   }),
 
-  http.delete(`${BASE_URL}/users/:id`, ({ params }) => {
+  http.delete(`${BASE_URL}/user/:id`, ({ params }) => {
     const id = params.id as string;
     mockUsers = mockUsers.filter((u) => u.id !== id);
 

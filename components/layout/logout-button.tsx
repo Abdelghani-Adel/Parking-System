@@ -1,6 +1,5 @@
 "use client";
-import { logoutUser } from "@/redux/slices/profileSlice";
-import { useAppDispatch } from "@/redux/store";
+import { logoutUser } from "@/utils/auth";
 import { ReactNode } from "react";
 
 export function LogoutButton({
@@ -10,9 +9,8 @@ export function LogoutButton({
   className: string;
   children: ReactNode;
 }) {
-  const dispatch = useAppDispatch();
   const handleLogout = async () => {
-    await dispatch(logoutUser());
+    await logoutUser();
     // Optionally, redirect the user to the login page or home page
     window.location.href = "/login";
   };

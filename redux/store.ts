@@ -7,7 +7,6 @@ import userSlice from "./slices/userSlice";
 import planCardSlice from "./slices/planCardSlice";
 import managerCardSlice from "./slices/managerCardSlice";
 import currencySlice from "./slices/currencySlice";
-import profileSlice from "./slices/profileSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({
@@ -15,7 +14,6 @@ export const store = configureStore({
     parkings: parkingSlice,
     users: userSlice,
     currencies: currencySlice,
-    profile: profileSlice,
     dispensers: dispenserSlice,
     plans: planSlice,
     policies: policySlice,

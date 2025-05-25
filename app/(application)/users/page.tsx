@@ -1,6 +1,8 @@
+"use client";
+
 import UserTable from "@/components/organisms/tables/UserTable";
 
-const Page = async () => {
+const Page = () => {
   return (
     <>
       <h1 className="text-2xl font-bold">Users Setup</h1>

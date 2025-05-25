@@ -1,7 +1,10 @@
 "use client";
 
-import React from "react";
-import MUIDataTable, { MUIDataTableOptions, MUIDataTableColumn } from "mui-datatables";
+import React, { useState, useEffect } from "react";
+import MUIDataTable, {
+  MUIDataTableOptions,
+  MUIDataTableColumn,
+} from "mui-datatables";
 
 interface MUIDatatableProps {
   title?: string; // Optional title
@@ -18,6 +21,14 @@ const MUIDatatable: React.FC<MUIDatatableProps> = ({
   options,
   disableToolbar,
 }) => {
+  // Add client-side rendering state
+  const [isClient, setIsClient] = useState(false);
+  
+  // Set isClient to true after component mounts (client-side only)
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   const defaultOptions: MUIDataTableOptions = {
     filterType: "multiselect",
     responsive: "standard",
@@ -30,9 +41,20 @@ const MUIDatatable: React.FC<MUIDatatableProps> = ({
   // Merge default options with any passed options
   const mergedOptions: MUIDataTableOptions = { ...defaultOptions, ...options };
 
+  // Only render the MUIDataTable on the client side
+  if (!isClient) {
+    // Return a placeholder with similar structure during server-side rendering
+    return <div className="muidatatable"><div className="MuiPaper-root"></div></div>;
+  }
+
   return (
     <div className="muidatatable">
-      <MUIDataTable title={""} data={data} columns={columns} options={mergedOptions} />
+      <MUIDataTable
+        title={""}
+        data={data}
+        columns={columns}
+        options={mergedOptions}
+      />
     </div>
   );
 };
