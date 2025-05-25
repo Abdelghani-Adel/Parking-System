@@ -18,7 +18,13 @@ import {
   useVehicleTypesForSelect,
 } from "@/hooks/selectOptions";
 import MuiModal from "@/components/ui/MuiModal";
-import { FaCheck, FaPrint, FaMoneyBill, FaCreditCard } from "react-icons/fa";
+import {
+  FaCheck,
+  FaPrint,
+  FaMoneyBill,
+  FaCreditCard,
+  FaQrcode,
+} from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface TicketFormData {
@@ -75,16 +81,23 @@ const POSForm = () => {
     if (invoiceWindow) {
       const formData = form.getValues();
 
+      // Generate QR code data - in a real app, you might want to encode more information
+      const qrData = `Ticket:${
+        formData.ticketNumber
+      },Amount:${totalFees.toFixed(2)},Date:${new Date().toISOString()}`;
+
       invoiceWindow.document.write(`
         <html>
           <head>
             <title>Parking Invoice</title>
+            <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
             <style>
               body { font-family: Arial; width: 80mm; margin: 0; padding: 10px; }
               .header { text-align: center; margin-bottom: 10px; }
               .info { margin-bottom: 5px; }
               .total { font-weight: bold; margin-top: 10px; }
               .footer { text-align: center; margin-top: 20px; font-size: 12px; }
+              .qrcode { text-align: center; margin: 15px 0; }
             </style>
           </head>
           <body>
@@ -95,13 +108,28 @@ const POSForm = () => {
             <div class="info">Date: ${new Date().toLocaleDateString()}</div>
             <div class="info">Time: ${new Date().toLocaleTimeString()}</div>
             <div class="info">Payment Method: ${paymentMethod?.toUpperCase()}</div>
-            <div class="total">Total Amount: $${totalFees.toFixed(2)}</div>
-            <div class="footer">Thank you for your business!</div>
+            <div class="total">Total Amount: EGP ${totalFees.toFixed(2)}</div>
+            <div class="qrcode" id="qrcode"></div>
+            <div class="footer">Waiting for you next visit!</div>
+            
+            <script>
+              // Generate QR code
+              var typeNumber = 4;
+              var errorCorrectionLevel = 'L';
+              var qr = qrcode(typeNumber, errorCorrectionLevel);
+              qr.addData('${qrData}');
+              qr.make();
+              document.getElementById('qrcode').innerHTML = qr.createImgTag(4);
+            </script>
           </body>
         </html>
       `);
       invoiceWindow.document.close();
-      invoiceWindow.print();
+
+      // Add a delay before printing to ensure QR code is fully generated
+      setTimeout(() => {
+        invoiceWindow.print();
+      }, 500); // 500ms delay
     }
 
     // Reset the form
@@ -198,7 +226,7 @@ const POSForm = () => {
 
           <div className="mb-6">
             <p className="text-lg font-semibold text-green-600 mb-4">
-              Total Fees: ${totalFees.toFixed(2)}
+              Total Fees: EGP {totalFees.toFixed(2)}
             </p>
 
             <div className="space-y-3">
